@@ -1,5 +1,5 @@
 import { Modifier } from "./Modifier";
 
 export interface IModifiersFormatter {
-  (modifiers: Modifier[]): string
+  (modifiers: Modifier[]): string;
 }

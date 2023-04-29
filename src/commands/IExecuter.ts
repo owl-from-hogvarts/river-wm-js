@@ -2,6 +2,5 @@ import { IModifiersFormatter } from "./mapCommand/keyBindings/IModifiersFormatte
 import { ICommand } from "./ICommand";
 
 export interface IExecuter {
-  execute(command: ICommand): void
-
+  execute(command: ICommand): void;
 }
