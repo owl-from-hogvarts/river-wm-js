@@ -3,10 +3,8 @@ import { ICommand } from "../../ICommand";
 import { Modifier, Shift } from "./Modifier";
 import { IModifiersFormatter } from "./IModifiersFormatter";
 
-export class KeyBinding {
+export class Shortcut {
   constructor(
-    public readonly name: string,
-    public readonly command: ICommand,
     public readonly modifiers: Modifier[],
     public readonly key: string
   ) {}
@@ -15,3 +13,4 @@ export class KeyBinding {
     return format(this.modifiers);
   }
 }
+
