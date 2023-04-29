@@ -1,5 +1,6 @@
-
 export interface ICommand {
-  command: string
-  args: string[]
+  readonly command: string;
+  readonly args: string[];
+
+  toCommandString(): string;
 }
