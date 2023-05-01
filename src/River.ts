@@ -4,7 +4,7 @@ import { ICommand } from "./commands/ICommand";
 import { IExecuter } from "./commands/IExecuter";
 import { RiverctlExecuter } from "./commands/RiverctlExecuter";
 import { MapCommand } from "./commands/mapCommand/MapCommand";
-import { Shortcut } from "./commands/mapCommand/keyBindings/KeyBinding";
+import { Shortcut } from "./commands/mapCommand/keyBindings/Shortcut";
 import { Mode } from "./commands/mapCommand/keyBindings/Mode";
 
 class River {

@@ -1,4 +1,4 @@
-import { Shortcut } from "./keyBindings/KeyBinding";
+import { Shortcut } from "./keyBindings/Shortcut";
 import { Modifier } from "./keyBindings/Modifier";
 import { BaseCommand } from "../BaseCommand";
 import { ICommand } from "../ICommand";

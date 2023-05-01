@@ -1,5 +1,5 @@
 import { ICommand } from "../../ICommand";
-import { Shortcut } from "./KeyBinding";
+import { Shortcut } from "./Shortcut";
 
 export class Mode {
   public static readonly DEFAULT_MODE: string = "normal";
