@@ -1,4 +1,4 @@
-import { BaseCommand } from "./BaseCommand";
+import { BaseCommand } from "./Command";
 
 export class DeclareMode extends BaseCommand {
   override command: string = "declare-mode"

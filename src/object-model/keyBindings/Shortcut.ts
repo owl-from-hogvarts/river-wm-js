@@ -1,6 +1,4 @@
-import { SpawnCommand } from "../../SpawnCommand";
-import { ICommand } from "../../ICommand";
-import { Modifier, Shift } from "./Modifier";
+import { Modifier } from "./Modifier";
 import { IModifiersFormatter } from "./IModifiersFormatter";
 
 export class Shortcut {

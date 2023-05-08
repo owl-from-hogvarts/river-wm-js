@@ -1,4 +1,4 @@
-import { BaseCommand } from "./BaseCommand";
+import { BaseCommand } from "./Command";
 
 export class SendLayoutCmdCommand extends BaseCommand {
   override command: string = "send-layout-cmd"

@@ -1,7 +1,7 @@
-import { BaseCommand } from "./BaseCommand";
-import { ICommand } from "./ICommand";
+import { BaseCommand } from "../executers/Command";
+import { BaseAction } from "./BaseAction";
 
-export class SpawnCommand extends BaseCommand implements ICommand {
+export class SpawnCommand extends BaseAction {
 
   constructor(
     private readonly execCommand: string,

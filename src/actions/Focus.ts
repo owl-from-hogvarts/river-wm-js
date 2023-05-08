@@ -1,11 +1,12 @@
-import { BaseCommand } from "./BaseCommand";
+import { BaseCommand } from "../executers/Command";
+import { BaseAction } from "./BaseAction";
 
 export enum FocusDirection {
   NEXT = "next",
   PREVIOUS = "previous"
 };
 
-export class FocusCommand extends BaseCommand {
+export class FocusCommand extends BaseAction {
   override command: string = "focus-view"
 
   override get args() {
