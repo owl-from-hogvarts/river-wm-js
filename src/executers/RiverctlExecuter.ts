@@ -91,7 +91,7 @@ export class RiverctlExecuter implements IExecuter {
 
   // executer decides how actions are mapped to commands, 
   // 'cause commands are private implementation detail
-  private mapActionToCommand(action: BaseAction): BaseCommand {
+  // private mapActionToCommand(action: BaseAction): BaseCommand {
 
-  }
+  // }
 }

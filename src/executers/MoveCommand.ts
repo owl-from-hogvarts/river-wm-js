@@ -1,6 +1,6 @@
 import { BaseAction } from "../actions/BaseAction";
 import { MoveAction } from "../actions/Move";
-import { BaseCommand, ICommandFactory } from "./Command";
+import { BaseCommand } from "./Command";
 
 export class MoveCommand extends BaseCommand {
   override command: string = "move";
@@ -15,12 +15,13 @@ export class MoveCommand extends BaseCommand {
   
 }
 
-export class MoveCommandFactory implements ICommandFactory {
-  tryBuildFrom(action: BaseAction): BaseCommand | null {
-    if (action instanceof MoveAction) {
-      return new MoveCommand(action);
-    }
-    return null;
-  }
+// export class MoveCommandFactory implements ICommandFactory {
+//   tryBuildFrom(action: BaseAction): BaseCommand | null {
+//     if (action instanceof MoveAction) {
+//       return new MoveCommand(action);
+//     }
+//     return null;
+//   }
   
-}
+// }
+

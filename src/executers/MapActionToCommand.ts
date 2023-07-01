@@ -1,9 +1,8 @@
 import { BaseAction } from "../actions/BaseAction";
 import { CloseAction } from "../actions/Close";
-import { ICommandFactory } from "./Command";
 
 // all commands should be registered here
-const map = new Set<ICommandFactory>()
+// const map = new Set<ICommandFactory>()
 
 // ok so there are actions which need to be mapped to commands
 // actions know nothing about commands, since they belongs to 
@@ -41,4 +40,14 @@ const map = new Set<ICommandFactory>()
 // but this is hard to accomplish: because action/command becomes black box
 // so execute(this) needs to return low level command which
 // corresponds to high level command.
+
+// allow actions to know something about implementation.
+// That is know implementation's capabilities. So let's declare several
+// interfaces witch would describe capabilities of appliers
+// Each action should have method which asks implementation 
+// to provide something relevant. Result of such call
+// are just returned back from the method.
+
+// May just use visitor pattern. Yeah, each action would require
+// separate method, but but so would other approaches
 

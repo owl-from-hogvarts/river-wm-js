@@ -21,6 +21,6 @@ interface ICommand {
   toCommandString(): string;
 }
 
-export interface ICommandFactory {
-  tryBuildFrom(action: BaseAction): BaseCommand | null
-}
+// export interface ICommandFactory {
+//   tryBuildFrom(action: BaseAction): BaseCommand | null
+// }
