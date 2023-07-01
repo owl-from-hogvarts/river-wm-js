@@ -6,19 +6,20 @@
 // making property private allow to forget completely forget about it
 const discriminant = Symbol()
 
-// generalCapability interface should restrict only part of 
-export interface IGeneralCapability<R> {
-  [key: string]: (...args: any[]) => R
-}
+type CallableKeyOf<T> = {
+  [P in keyof T]: T[P] extends (...args: any[]) => any ? P : never;
+}[keyof T];
 
-export type test<T, R> = {
-  [key in keyof T]: (...args: any[]) => R
+export type Callable<T> = Pick<T, CallableKeyOf<T>>;
+
+type AllMethodsReturn<R, T extends Callable<T>> = {
+  [Key in keyof T]: (...args: Parameters<T[Key]>) => R
 }
 
 export abstract class BaseAction<T> {
   private [discriminant]: undefined
 
-  abstract getImplementationDetails<R>(capability: test<T, R>): R
+  abstract getImplementationDetails<R>(visitor: AllMethodsReturn<R, Callable<T>>): R
 
 }
 

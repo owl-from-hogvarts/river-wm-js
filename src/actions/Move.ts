@@ -8,7 +8,15 @@ export enum MoveDirection {
 }
 
 export class MoveAction extends BaseAction {
+  override getImplementationDetails<R>(visitor: ICanMove<R>): R {
+    return visitor.move(this.direction)
+  }
   constructor(public readonly direction: MoveDirection, public readonly step: number = 100) {
     super()
   };
 }
+
+export interface ICanMove<R> { 
+  move(moveDirection: MoveDirection): R
+}
+

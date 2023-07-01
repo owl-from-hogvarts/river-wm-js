@@ -1,10 +1,9 @@
-import { BaseCommand } from "../executers/Command";
 import { SwitchableMode } from "../object-model/keyBindings/Mode";
-import { BaseAction, IGeneralCapability } from "./BaseAction";
+import { BaseAction } from "./BaseAction";
 
 export class EnterMode extends BaseAction<ICanEnterMode<unknown>> {
-  override getImplementationDetails<R>(capability: ICanEnterMode<R>): R {
-    return capability.enterMode(this.modeName);
+  override getImplementationDetails<R>(visitor: ICanEnterMode<R>):R {
+    return visitor.enterMode(this.modeName);
   }
   public readonly modeName: string;
 
@@ -18,11 +17,12 @@ export interface ICanEnterMode<R> {
   enterMode(enterMode: string): R;
 }
 
-const a = {
+class A implements ICanEnterMode<string> {
   enterMode(enterMode: string) {
     return "";
-  },
-  hui() {return 19},
+  }
+
+  hui() {return 19}
 };
 
-new EnterMode(null as any).getImplementationDetails(a);
+new EnterMode(null as any).getImplementationDetails(new A());

@@ -1,27 +1,28 @@
-import exp from "node:constants";
 import { BaseAction } from "../../actions/BaseAction";
+import { EnterMode, ICanEnterMode } from "../../actions/EnterMode";
+import { ICanMove, MoveDirection } from "../../actions/Move";
 import { Shortcut } from "./Shortcut";
 
-export class BaseMode {
+export class BaseMode<T> {
   constructor(
-    public readonly keyBindings: KeyBinding[],
+    public readonly keyBindings: KeyBinding<T>[]
   ) {}
 }
 
-export class SwitchableMode extends BaseMode {
+export class SwitchableMode<T> extends BaseMode<T> {
   constructor(
-    keyBindings: KeyBinding[],
+    keyBindings: KeyBinding<T>[],
     public readonly name: string,
     public readonly enterModeKeyBinding: Shortcut,
-    public readonly fallBackMode: SwitchableMode
+    public readonly fallBackMode: SwitchableMode<T>
   ) {
-    super(keyBindings)
+    super(keyBindings);
   }
 }
 
-export class KeyBinding {
+export class KeyBinding<T> {
   constructor(
-    public readonly action: BaseAction,
+    public readonly action: BaseAction<T>,
     public readonly shortcut: Shortcut
   ) {}
 }

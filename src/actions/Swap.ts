@@ -6,12 +6,15 @@ export enum SwapDirection {
 }
 
 export class SwapCommand extends BaseAction {
-  override command: string = "swap"
-
-  override get args() {
-    return [this.direction]
+  override getImplementationDetails<R>(visitor: ICanSwap<R>): R {
+    return visitor.swap(this.direction)
   }
   constructor(private readonly direction: SwapDirection) {
     super()
   }
+}
+
+
+export interface ICanSwap<R> {
+  swap(swapDirection: SwapDirection): R
 }
