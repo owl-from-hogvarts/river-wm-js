@@ -1,4 +1,3 @@
-import { BaseCommand } from "../../executers/Command";
 import { BaseAction } from "./BaseAction";
 
 export enum FocusDirection {

@@ -1,12 +1,12 @@
 import { IExecuter } from "./IExecuter";
 import { execFile } from "node:child_process";
 import { promisify } from "node:util";
-import { River } from "../object-model/River";
-import { MapCommand } from "./Map";
-import { DeclareMode } from "./DeclareMode";
+import { River, RiverOptions } from "../object-model/River";
+import { MapCommand } from "./commands/Map";
+import { DeclareMode } from "./commands/DeclareMode";
 import { EnterMode } from "../object-model/actions/EnterMode";
 import { BaseMode, SwitchableMode } from "../object-model/keyBindings/Mode";
-import { BaseCommand } from "./Command";
+import { BaseCommand } from "./commands/Command";
 import { CommandMapper, RiverctlFeatures } from "./CommandMapper";
 
 
@@ -38,6 +38,9 @@ export class RiverctlExecuter implements IExecuter {
   public apply(river: River<RiverctlFeatures>) {
     // apply options
     // apply key bindings
+  }
+
+  private applyOptions(options: RiverOptions) {
 
   }
 

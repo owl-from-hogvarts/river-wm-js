@@ -1,6 +1,6 @@
-import { Modifier } from "../object-model/keyBindings/Modifier";
+import { Shortcut } from "../../object-model/keyBindings/KeyBindings";
+import { Modifier } from "../../object-model/keyBindings/Modifier";
 import { BaseCommand } from "./Command";
-import { Shortcut } from "../object-model/keyBindings/KeyBindings";
 
 export class MapCommand extends BaseCommand {
   override command = "map";

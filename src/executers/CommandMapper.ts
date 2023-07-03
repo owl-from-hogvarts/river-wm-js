@@ -2,7 +2,7 @@ import { FocusDirection } from "../object-model/actions/Focus";
 import { MoveDirection } from "../object-model/actions/Move";
 import { SwapDirection } from "../object-model/actions/Swap";
 import { FullFeatures } from "../object-model/River";
-import { BaseCommand } from "./Command";
+import { BaseCommand } from "./commands/Command";
 
 // all commands should be registered here
 // const map = new Set<ICommandFactory>()

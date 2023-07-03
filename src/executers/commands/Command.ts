@@ -12,7 +12,7 @@ export abstract class BaseCommand implements ICommand {
 
 }
 
-import { BaseAction } from "../object-model/actions/BaseAction";
+import { BaseAction } from "../../object-model/actions/BaseAction";
 
 interface ICommand {
   readonly command: string;

@@ -1,5 +1,5 @@
-import { BaseAction } from "../object-model/actions/BaseAction";
-import { MoveAction } from "../object-model/actions/Move";
+import { BaseAction } from "../../object-model/actions/BaseAction";
+import { MoveAction } from "../../object-model/actions/Move";
 import { BaseCommand } from "./Command";
 
 export class MoveCommand extends BaseCommand {
