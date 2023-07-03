@@ -11,7 +11,7 @@ export class SwitchableMode<T> extends BaseMode<T> {
   constructor(
     keyBindings: KeyBinding<T>[],
     public readonly name: string,
-    public readonly enterModeKeyBinding: Shortcut,
+    public readonly toggleModeKeyBinding: Shortcut,
     public readonly fallBackMode: SwitchableMode<T>
   ) {
     super(keyBindings);
