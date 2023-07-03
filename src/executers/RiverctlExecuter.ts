@@ -16,7 +16,7 @@ enum SpecialModeIds {
   LOCK_MODE = "lock",
 }
 
-export class RiverctlExecuter implements IExecuter {
+export class RiverctlExecuter implements IExecuter<RiverctlFeatures> {
   private static readonly RIVER_CONFIG_COMMAND = "riverctl";
   private readonly commandMapper = new CommandMapper();
   private readonly commands: BaseCommand[] = [];
@@ -38,10 +38,26 @@ export class RiverctlExecuter implements IExecuter {
    */
   public apply(river: River<RiverctlFeatures>) {
     // apply options
+    this.commands.push(...this.applyOptions(river.options))
     // apply key bindings
+
+    if (river.modes.DEFAULT_MODE) {
+      const commands = this.defineKeyBindingsForSpecialMode(river.modes.DEFAULT_MODE, SpecialModeIds.NORMAL_MODE)
+      this.commands.push(...commands)
+    }
+
+    if (river.modes.LOCK_MODE) {
+      const commands = this.defineKeyBindingsForSpecialMode(river.modes.LOCK_MODE, SpecialModeIds.LOCK_MODE)
+      this.commands.push(...commands)
+    }
+
+    for (const mode of river.modes.otherModes) {
+      const commands = this.defineSwitchableMode(mode)
+      this.commands.push(...commands)
+    }
   }
 
-  private applyOptions(options: RiverOptions) {
+  private applyOptions(options: RiverOptions): BaseCommand[] {
     const optionsCommands: BaseCommand[] = [];
     if (options.attachMode) {
       optionsCommands.push(new AttachMode(options.attachMode))
@@ -96,6 +112,8 @@ export class RiverctlExecuter implements IExecuter {
     if (options.repeat) {
       optionsCommands.push(new Repeat(options.repeat.rate, options.repeat.delay))
     }
+
+    return optionsCommands;
   }
 
   private defineKeybindingsForMode(mode: BaseMode<RiverctlFeatures>, modeId: string): BaseCommand[] {
@@ -114,7 +132,7 @@ export class RiverctlExecuter implements IExecuter {
     return commands;
   }
 
-  private setupKeyBindingsForSpecialMode(mode: BaseMode<RiverctlFeatures>, specialModeId: SpecialModeIds): BaseCommand[] {
+  private defineKeyBindingsForSpecialMode(mode: BaseMode<RiverctlFeatures>, specialModeId: SpecialModeIds): BaseCommand[] {
     return this.defineKeybindingsForMode(mode, specialModeId);
   }
 
