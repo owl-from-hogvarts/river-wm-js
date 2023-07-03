@@ -5,7 +5,7 @@ export enum FocusDirection {
   PREVIOUS = "previous"
 };
 
-export class FocusCommand extends BaseAction<ICanFocus<unknown>> {
+export class FocusAction extends BaseAction<ICanFocus<unknown>> {
   override getImplementationDetails<R>(visitor: ICanFocus<R>): R {
     return visitor.focus(this.direction)
   }

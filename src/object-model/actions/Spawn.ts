@@ -1,6 +1,6 @@
 import { BaseAction } from "./BaseAction";
 
-export class SpawnCommand extends BaseAction<ICanSpawn<unknown>> {
+export class SpawnAction extends BaseAction<ICanSpawn<unknown>> {
   override getImplementationDetails<R>(visitor: ICanSpawn<R>): R {
     return visitor.spawn(this.execCommand, this.args)
   }

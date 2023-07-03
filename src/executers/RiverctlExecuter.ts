@@ -2,9 +2,9 @@ import { IExecuter } from "./IExecuter";
 import { execFile } from "node:child_process";
 import { promisify } from "node:util";
 import { River, RiverOptions } from "../object-model/River";
-import { MapCommand } from "./commands/Map";
-import { DeclareMode } from "./commands/DeclareMode";
-import { EnterMode } from "../object-model/actions/EnterMode";
+import { MapCommand } from "./commands/MapCommand";
+import { DeclareMode } from "./commands/DeclareModeCommand";
+import { EnterModeAction } from "../object-model/actions/EnterMode";
 import { BaseMode, SwitchableMode } from "../object-model/keyBindings/Mode";
 import { BaseCommand } from "./commands/Command";
 import { CommandMapper, RiverctlFeatures } from "./CommandMapper";
@@ -151,13 +151,13 @@ export class RiverctlExecuter implements IExecuter<RiverctlFeatures> {
     const mapEnterMode = new MapCommand(
       mode.fallBackMode.name,
       mode.toggleModeKeyBinding,
-      (new EnterMode(mode)).getImplementationDetails(this.commandMapper)
+      (new EnterModeAction(mode)).getImplementationDetails(this.commandMapper)
     );
 
     const mapExitMode = new MapCommand(
       mode.name,
       mode.toggleModeKeyBinding,
-      (new EnterMode(mode.fallBackMode)).getImplementationDetails(this.commandMapper)
+      (new EnterModeAction(mode.fallBackMode)).getImplementationDetails(this.commandMapper)
     );
 
     const keyBindings = this.defineKeybindingsForMode(mode, mode.name);

@@ -1,7 +1,7 @@
 import { SwitchableMode } from "../keyBindings/Mode";
 import { BaseAction } from "./BaseAction";
 
-export class EnterMode extends BaseAction<ICanEnterMode<unknown>> {
+export class EnterModeAction extends BaseAction<ICanEnterMode<unknown>> {
   override getImplementationDetails<R>(visitor: ICanEnterMode<R>):R {
     return visitor.enterMode(this.modeName);
   }
@@ -25,4 +25,4 @@ class A implements ICanEnterMode<string> {
   hui() {return 19}
 };
 
-new EnterMode(null as any).getImplementationDetails(new A());
+new EnterModeAction(null as any).getImplementationDetails(new A());
