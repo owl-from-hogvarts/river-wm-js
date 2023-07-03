@@ -3,7 +3,6 @@ import { MoveDirection } from "../object-model/actions/Move";
 import { SwapDirection } from "../object-model/actions/Swap";
 import { FullFeatures } from "../object-model/River";
 import { BaseCommand } from "./Command";
-import { RiverctlFeatures } from "./RiverctlExecuter";
 
 // all commands should be registered here
 // const map = new Set<ICommandFactory>()

@@ -1,5 +1,4 @@
-import { BaseAction } from "../actions/BaseAction";
-import { Shortcut } from "./Shortcut";
+import { KeyBinding, Shortcut } from "./KeyBindings";
 
 export class BaseMode<T> {
   constructor(
@@ -18,9 +17,3 @@ export class SwitchableMode<T> extends BaseMode<T> {
   }
 }
 
-export class KeyBinding<T> {
-  constructor(
-    public readonly action: BaseAction<T>,
-    public readonly shortcut: Shortcut
-  ) {}
-}
