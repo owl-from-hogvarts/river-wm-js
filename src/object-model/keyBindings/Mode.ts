@@ -1,6 +1,4 @@
 import { BaseAction } from "../../actions/BaseAction";
-import { EnterMode, ICanEnterMode } from "../../actions/EnterMode";
-import { ICanMove, MoveDirection } from "../../actions/Move";
 import { Shortcut } from "./Shortcut";
 
 export class BaseMode<T> {

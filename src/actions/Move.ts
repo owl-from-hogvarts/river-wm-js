@@ -7,7 +7,7 @@ export enum MoveDirection {
   DOWN = "down",
 }
 
-export class MoveAction extends BaseAction {
+export class MoveAction extends BaseAction<ICanMove<unknown>> {
   override getImplementationDetails<R>(visitor: ICanMove<R>): R {
     return visitor.move(this.direction)
   }

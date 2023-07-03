@@ -5,7 +5,7 @@ export enum SwapDirection {
   NEXT = "next"
 }
 
-export class SwapCommand extends BaseAction {
+export class SwapCommand extends BaseAction<ICanSwap<unknown>> {
   override getImplementationDetails<R>(visitor: ICanSwap<R>): R {
     return visitor.swap(this.direction)
   }

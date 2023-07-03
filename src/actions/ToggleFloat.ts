@@ -1,7 +1,7 @@
 import { BaseAction } from "./BaseAction";
 
 /** Makes focused view either floating or tiled */
-export class ToggleFloat extends BaseAction {
+export class ToggleFloat extends BaseAction<ICanToggleFloat<unknown>> {
   override getImplementationDetails<R>(visitor: ICanToggleFloat<R>): R {
     return visitor.toggleFloat()
   }
