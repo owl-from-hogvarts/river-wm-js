@@ -17,12 +17,3 @@ export interface ICanEnterMode<R> {
   enterMode(enterMode: string): R;
 }
 
-class A implements ICanEnterMode<string> {
-  enterMode(enterMode: string) {
-    return "";
-  }
-
-  hui() {return 19}
-};
-
-new EnterModeAction(null as any).getImplementationDetails(new A());
