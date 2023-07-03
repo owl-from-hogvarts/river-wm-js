@@ -3,7 +3,7 @@ const determinant = Symbol()
 
 export abstract class BaseCommand implements ICommand {
   private [determinant]: undefined
-  abstract command: string;
+  readonly abstract command: string;
   abstract args: string[];
 
   public toCommandString(): string {
@@ -12,7 +12,13 @@ export abstract class BaseCommand implements ICommand {
 
 }
 
-import { BaseAction } from "../../object-model/actions/BaseAction";
+export class CustomCommand extends BaseCommand {
+  override args: string[];
+  constructor(override readonly command: string, ...args: string[]) {
+    super()
+    this.args = args
+  }
+}
 
 interface ICommand {
   readonly command: string;

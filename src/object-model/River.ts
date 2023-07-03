@@ -27,13 +27,24 @@ export class River<Features> {
   ) {}
 }
 
-enum AttachMode {
+export enum EAttachMode {
   TOP,
   BOTTOM,
 }
 
+export enum EFocusFollowCursor {
+  DISABLED,
+  NORMAL,
+  ALWAYS
+}
+
+export type THideCursor = Partial<{
+  timeout: number,
+  whenTyping: boolean
+}>
+
 export type RiverOptions = Partial<{
-  attachMode: AttachMode;
+  attachMode: EAttachMode;
   theme: Partial<{
     borderWidth: number;
     borderColorFocused: Color;
@@ -41,13 +52,13 @@ export type RiverOptions = Partial<{
     borderColorUrgent: Color;
     cursor: {
       cursorTheme: string;
-      size: number;
+      size?: number;
     };
-    backgroundColor: string;
+    backgroundColor: Color;
   }>;
-  focusFollowsCursor: boolean;
+  focusFollowsCursor: EFocusFollowCursor;
   /** Hide cursor when typing or after inactivity */
-  hideCursor: boolean;
+  hideCursor: THideCursor;
   repeat: {
     rate: number;
     delay: number;
