@@ -20,15 +20,6 @@ export type RiverModesDefinition<T> = {
   otherModes: SwitchableMode<T>[];
 };
 
-// aggregate interfaces defined by actions
-// into single type. Implementation then provides
-// something which complies the interface.
-// So, when new action is added:
-// 1. action itself is created (mostly data)
-// 2. interface with visitor method is created
-// 3. interface is added to aggregated type
-// 4. implementations are updated to comply new interface
-
 export class River<Features> {
   constructor(
     public readonly modes: RiverModesDefinition<Features>,
@@ -41,7 +32,7 @@ enum AttachMode {
   BOTTOM,
 }
 
-type RiverOptions = Partial<{
+export type RiverOptions = Partial<{
   attachMode: AttachMode;
   theme: Partial<{
     borderWidth: number;

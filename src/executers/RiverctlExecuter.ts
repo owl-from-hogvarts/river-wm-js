@@ -7,7 +7,7 @@ import { DeclareMode } from "./DeclareMode";
 import { EnterMode } from "../object-model/actions/EnterMode";
 import { BaseMode, SwitchableMode } from "../object-model/keyBindings/Mode";
 import { BaseCommand } from "./Command";
-import { CommandMapper, RiverctlFeatures } from "./MapActionToCommand";
+import { CommandMapper, RiverctlFeatures } from "./CommandMapper";
 
 
 enum SpecialModeIds {

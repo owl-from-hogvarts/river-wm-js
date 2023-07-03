@@ -53,6 +53,17 @@ import { BaseCommand } from "./Command";
 
 // May just use visitor pattern. Yeah, each action would require
 // separate method, but but so would other approaches
+
+// aggregate interfaces defined by actions
+// into single type. Implementation then provides
+// something which complies the interface.
+// So, when new action is added:
+// 1. action itself is created (mostly data)
+// 2. interface with visitor method is created
+// 3. interface is added to aggregated type
+// 4. implementations are updated to comply new interface
+
+
 export type FeatureReturn = BaseCommand
 export type RiverctlFeatures = FullFeatures<FeatureReturn>;
 
