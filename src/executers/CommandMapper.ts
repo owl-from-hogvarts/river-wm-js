@@ -6,6 +6,7 @@ import { BaseCommand } from "./commands/Command";
 import { EnterModeCommand } from "./commands/EnterModeCommand";
 import { FocusCommand } from "./commands/FocusCommand";
 import { MoveCommand } from "./commands/MoveCommand";
+import { SendLayoutCmdCommand } from "./commands/SendLayoutCmd";
 import { SpawnCommand } from "./commands/SpawnCommand";
 import { SwapCommand } from "./commands/SwapCommand";
 import { ToggleFloatCommand } from "./commands/ToggleFloatCommand";
@@ -74,6 +75,9 @@ export type FeatureReturn = BaseCommand
 export type RiverctlFeatures = FullFeatures<FeatureReturn>;
 
 export class CommandMapper implements RiverctlFeatures {
+  sendLayoutCmd(tileManager: string, args: string[]): BaseCommand {
+    return new SendLayoutCmdCommand(tileManager, args.join(" "))
+  }
   enterMode(enterMode: string): FeatureReturn {
     return new EnterModeCommand(enterMode)
   }

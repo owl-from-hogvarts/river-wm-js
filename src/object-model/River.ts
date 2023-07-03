@@ -1,6 +1,7 @@
 import { ICanEnterMode } from "./actions/EnterMode";
 import { ICanFocus } from "./actions/Focus";
 import { ICanMove } from "./actions/Move";
+import { ICanSendLayoutCmd } from "./actions/SendLayoutCmd";
 import { ICanSpawn } from "./actions/Spawn";
 import { ICanSwap } from "./actions/Swap";
 import { ICanToggleFloat } from "./actions/ToggleFloat";
@@ -12,7 +13,8 @@ export type FullFeatures<T> = ICanEnterMode<T> &
   ICanMove<T> &
   ICanSpawn<T> &
   ICanSwap<T> &
-  ICanToggleFloat<T>;
+  ICanToggleFloat<T> &
+  ICanSendLayoutCmd<T>;
 
 export type RiverModesDefinition<T> = {
   DEFAULT_MODE?: BaseMode<T>;
@@ -22,6 +24,7 @@ export type RiverModesDefinition<T> = {
 
 export class River<Features> {
   constructor(
+    public readonly tileManager: string,
     public readonly modes: RiverModesDefinition<Features>,
     public readonly options: RiverOptions
   ) {}

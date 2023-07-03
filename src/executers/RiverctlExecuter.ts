@@ -9,6 +9,7 @@ import { BaseMode, SwitchableMode } from "../object-model/keyBindings/Mode";
 import { BaseCommand } from "./commands/Command";
 import { CommandMapper, RiverctlFeatures } from "./CommandMapper";
 import { AttachMode, BackgroundColor, BorderColorFocused, BorderColorUnfocused, BorderColorUrgent, BorderWidth, CursorTheme, FocusFollowsCursor, HideCursor, Repeat } from "./commands/Options";
+import { DefaultLayout } from "./commands/DefaultLayoutCommand";
 
 
 enum SpecialModeIds {
@@ -37,6 +38,8 @@ export class RiverctlExecuter implements IExecuter<RiverctlFeatures> {
    * Applies configuration right now
    */
   public apply(river: River<RiverctlFeatures>) {
+    this.commands.push(new DefaultLayout(river.tileManager))
+    
     // apply options
     this.commands.push(...this.applyOptions(river.options))
     // apply key bindings
