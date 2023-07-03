@@ -4,7 +4,7 @@ import { promisify } from "node:util";
 import { River } from "../object-model/River";
 import { MapCommand } from "./Map";
 import { DeclareMode } from "./DeclareMode";
-import { EnterMode } from "../actions/EnterMode";
+import { EnterMode } from "../object-model/actions/EnterMode";
 import { BaseMode, SwitchableMode } from "../object-model/keyBindings/Mode";
 import { BaseCommand } from "./Command";
 import { CommandMapper, RiverctlFeatures } from "./MapActionToCommand";

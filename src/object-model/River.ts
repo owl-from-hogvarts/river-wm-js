@@ -1,9 +1,9 @@
-import { ICanEnterMode } from "../actions/EnterMode";
-import { ICanFocus } from "../actions/Focus";
-import { ICanMove } from "../actions/Move";
-import { ICanSpawn } from "../actions/Spawn";
-import { ICanSwap } from "../actions/Swap";
-import { ICanToggleFloat } from "../actions/ToggleFloat";
+import { ICanEnterMode } from "./actions/EnterMode";
+import { ICanFocus } from "./actions/Focus";
+import { ICanMove } from "./actions/Move";
+import { ICanSpawn } from "./actions/Spawn";
+import { ICanSwap } from "./actions/Swap";
+import { ICanToggleFloat } from "./actions/ToggleFloat";
 import { Color } from "./Color";
 import { BaseMode, SwitchableMode } from "./keyBindings/Mode";
 

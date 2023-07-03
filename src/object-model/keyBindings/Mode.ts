@@ -1,4 +1,4 @@
-import { BaseAction } from "../../actions/BaseAction";
+import { BaseAction } from "../actions/BaseAction";
 import { Shortcut } from "./Shortcut";
 
 export class BaseMode<T> {

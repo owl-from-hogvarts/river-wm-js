@@ -1,6 +1,6 @@
-import { FocusDirection } from "../actions/Focus";
-import { MoveDirection } from "../actions/Move";
-import { SwapDirection } from "../actions/Swap";
+import { FocusDirection } from "../object-model/actions/Focus";
+import { MoveDirection } from "../object-model/actions/Move";
+import { SwapDirection } from "../object-model/actions/Swap";
 import { FullFeatures } from "../object-model/River";
 import { BaseCommand } from "./Command";
 import { RiverctlFeatures } from "./RiverctlExecuter";
