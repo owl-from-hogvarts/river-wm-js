@@ -1,5 +1,9 @@
-import { BaseAction } from "../actions/BaseAction";
-import { CloseAction } from "../actions/Close";
+import { FocusDirection } from "../actions/Focus";
+import { MoveDirection } from "../actions/Move";
+import { SwapDirection } from "../actions/Swap";
+import { FullFeatures } from "../object-model/River";
+import { BaseCommand } from "./Command";
+import { RiverctlFeatures } from "./RiverctlExecuter";
 
 // all commands should be registered here
 // const map = new Set<ICommandFactory>()
@@ -50,4 +54,27 @@ import { CloseAction } from "../actions/Close";
 
 // May just use visitor pattern. Yeah, each action would require
 // separate method, but but so would other approaches
+export type FeatureReturn = BaseCommand
+export type RiverctlFeatures = FullFeatures<FeatureReturn>;
 
+export class CommandMapper implements RiverctlFeatures {
+  enterMode(enterMode: string): FeatureReturn {
+    throw new Error("Method not implemented.");
+  }
+  focus(focusDirection: FocusDirection): FeatureReturn {
+    throw new Error("Method not implemented.");
+  }
+  move(moveDirection: MoveDirection): FeatureReturn {
+    throw new Error("Method not implemented.");
+  }
+  spawn(command: string, args: string[]): FeatureReturn {
+    throw new Error("Method not implemented.");
+  }
+  swap(swapDirection: SwapDirection): FeatureReturn {
+    throw new Error("Method not implemented.");
+  }
+  toggleFloat(): FeatureReturn {
+    throw new Error("Method not implemented.");
+  }
+
+}

@@ -5,10 +5,10 @@ import { River } from "../object-model/River";
 import { MapCommand } from "./Map";
 import { DeclareMode } from "./DeclareMode";
 import { EnterMode } from "../actions/EnterMode";
-import { BaseAction } from "../actions/BaseAction";
 import { BaseMode, SwitchableMode } from "../object-model/keyBindings/Mode";
-import { CloseAction } from "../actions/Close";
 import { BaseCommand } from "./Command";
+import { CommandMapper, RiverctlFeatures } from "./MapActionToCommand";
+
 
 enum SpecialModeIds {
   NORMAL_MODE = "normal",
@@ -17,6 +17,7 @@ enum SpecialModeIds {
 
 export class RiverctlExecuter implements IExecuter {
   private static readonly RIVER_CONFIG_COMMAND = "riverctl";
+  private readonly commandMapper = new CommandMapper();
   private readonly commands: BaseCommand[] = [];
   private readonly execFile = promisify(execFile);
   private readonly definedModes: Set<SpecialModeIds | string> = new Set([
@@ -34,20 +35,20 @@ export class RiverctlExecuter implements IExecuter {
   /**
    * Applies configuration right now
    */
-  public apply(river: River) {
+  public apply(river: River<RiverctlFeatures>) {
     // apply options
     // apply key bindings
 
   }
 
-  private defineKeybindingsForMode(mode: BaseMode, modeId: string): BaseCommand[] {
+  private defineKeybindingsForMode(mode: BaseMode<RiverctlFeatures>, modeId: string): BaseCommand[] {
     const commands: BaseCommand[] = [];
 
     for (const keyBinding of mode.keyBindings) {
       const mapCommand = new MapCommand(
         modeId,
         keyBinding.shortcut,
-        this.mapActionToCommand(keyBinding.action)
+        keyBinding.action.getImplementationDetails(this.commandMapper)
       );
 
       commands.push(mapCommand);
@@ -56,12 +57,12 @@ export class RiverctlExecuter implements IExecuter {
     return commands;
   }
 
-  private setupKeyBindingsForSpecialMode(mode: BaseMode, specialModeId: SpecialModeIds): BaseCommand[] {
+  private setupKeyBindingsForSpecialMode(mode: BaseMode<RiverctlFeatures>, specialModeId: SpecialModeIds): BaseCommand[] {
     return this.defineKeybindingsForMode(mode, specialModeId);
   }
 
 
-  private defineSwitchableMode(mode: SwitchableMode): BaseCommand[] {
+  private defineSwitchableMode(mode: SwitchableMode<RiverctlFeatures>): BaseCommand[] {
     // declare mode
     if (this.definedModes.has(mode.name)) {
       throw new Error(
@@ -74,24 +75,18 @@ export class RiverctlExecuter implements IExecuter {
 
     const mapEnterMode = new MapCommand(
       mode.fallBackMode.name,
-      mode.enterModeKeyBinding,
-      this.mapActionToCommand(new EnterMode(mode))
+      mode.toggleModeKeyBinding,
+      (new EnterMode(mode)).getImplementationDetails(this.commandMapper)
     );
 
     const mapExitMode = new MapCommand(
       mode.name,
-      mode.enterModeKeyBinding,
-      this.mapActionToCommand(new EnterMode(mode.fallBackMode))
+      mode.toggleModeKeyBinding,
+      (new EnterMode(mode.fallBackMode)).getImplementationDetails(this.commandMapper)
     );
 
     const keyBindings = this.defineKeybindingsForMode(mode, mode.name);
 
     return [modeDeclaration, ...keyBindings, mapEnterMode, mapExitMode];
   }
-
-  // executer decides how actions are mapped to commands, 
-  // 'cause commands are private implementation detail
-  // private mapActionToCommand(action: BaseAction): BaseCommand {
-
-  // }
 }
