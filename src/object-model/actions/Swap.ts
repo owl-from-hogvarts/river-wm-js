@@ -1,8 +1,8 @@
 import { BaseAction } from "./BaseAction";
 
 export enum SwapDirection {
-  PREVIOUS = "previous",
-  NEXT = "next"
+  PREVIOUS,
+  NEXT
 }
 
 export class SwapAction extends BaseAction<ICanSwap<unknown>> {

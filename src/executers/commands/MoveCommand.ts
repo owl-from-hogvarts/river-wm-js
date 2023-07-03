@@ -8,7 +8,7 @@ export class MoveCommand extends BaseCommand {
     return [this.moveAction.direction, this.moveAction.step.toString()];
   }
 
-  constructor(private readonly moveAction: MoveAction) {
+  constructor(private moveAction: MoveAction) {
     super();
 
   }

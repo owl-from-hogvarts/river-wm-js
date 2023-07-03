@@ -1,8 +1,14 @@
 import { FocusDirection } from "../object-model/actions/Focus";
-import { MoveDirection } from "../object-model/actions/Move";
+import { MoveAction, MoveDirection } from "../object-model/actions/Move";
 import { SwapDirection } from "../object-model/actions/Swap";
 import { FullFeatures } from "../object-model/River";
 import { BaseCommand } from "./commands/Command";
+import { EnterModeCommand } from "./commands/EnterModeCommand";
+import { FocusCommand } from "./commands/FocusCommand";
+import { MoveCommand } from "./commands/MoveCommand";
+import { SpawnCommand } from "./commands/SpawnCommand";
+import { SwapCommand } from "./commands/SwapCommand";
+import { ToggleFloatCommand } from "./commands/ToggleFloatCommand";
 
 // all commands should be registered here
 // const map = new Set<ICommandFactory>()
@@ -69,22 +75,22 @@ export type RiverctlFeatures = FullFeatures<FeatureReturn>;
 
 export class CommandMapper implements RiverctlFeatures {
   enterMode(enterMode: string): FeatureReturn {
-    throw new Error("Method not implemented.");
+    return new EnterModeCommand(enterMode)
   }
   focus(focusDirection: FocusDirection): FeatureReturn {
-    throw new Error("Method not implemented.");
+    return new FocusCommand(focusDirection)
   }
-  move(moveDirection: MoveDirection): FeatureReturn {
-    throw new Error("Method not implemented.");
+  move(moveAction: MoveAction): FeatureReturn {
+    return new MoveCommand(moveAction)
   }
   spawn(command: string, args: string[]): FeatureReturn {
-    throw new Error("Method not implemented.");
+    return new SpawnCommand(command, args)
   }
   swap(swapDirection: SwapDirection): FeatureReturn {
-    throw new Error("Method not implemented.");
+    return new SwapCommand(swapDirection)
   }
   toggleFloat(): FeatureReturn {
-    throw new Error("Method not implemented.");
+    return new ToggleFloatCommand()
   }
 
 }

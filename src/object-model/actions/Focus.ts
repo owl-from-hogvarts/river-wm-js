@@ -1,8 +1,8 @@
 import { BaseAction } from "./BaseAction";
 
 export enum FocusDirection {
-  NEXT = "next",
-  PREVIOUS = "previous"
+  NEXT,
+  PREVIOUS
 };
 
 export class FocusAction extends BaseAction<ICanFocus<unknown>> {
