@@ -76,7 +76,7 @@ export type RiverctlFeatures = FullFeatures<FeatureReturn>;
 
 export class CommandMapper implements RiverctlFeatures {
   sendLayoutCmd(tileManager: string, args: string[]): BaseCommand {
-    return new SendLayoutCmdCommand(tileManager, args.join(" "))
+    return new SendLayoutCmdCommand(tileManager, args)
   }
   enterMode(enterMode: string): FeatureReturn {
     return new EnterModeCommand(enterMode)
