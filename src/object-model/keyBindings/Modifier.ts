@@ -1,5 +1,8 @@
 class ModifierInternal {
   constructor(private readonly modifierSymbol: string) {}
+  toString() {
+    return this.modifierSymbol
+  }
 }
 
 export type Modifier = ModifierInternal;
