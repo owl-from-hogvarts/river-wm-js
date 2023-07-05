@@ -4,6 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "build": "rollup --config rollup.config.ts --configPlugin typescript --bundleConfigAsCjs",
+    "dist": "npm run build; cp ./dist/index.js ~/.config/river/init.js; chmod u+x ~/.config/river/init.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
