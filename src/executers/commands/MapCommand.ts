@@ -19,7 +19,8 @@ export class MapCommand extends BaseCommand {
       this.modeName,
       this.shortcut.getModifiersFormatted(this.formatModifiers),
       this.shortcut.key,
-      this.cmd.toCommandString()
+      this.cmd.command,
+      ...this.cmd.args
     ];
   }
 
