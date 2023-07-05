@@ -9,7 +9,7 @@ const focusDirectionMap: {
 }
 
 export class FocusCommand extends BaseCommand {
-  override readonly command: string = "focus";
+  override readonly command: string = "focus-view";
   override args: string[];
 
   constructor(direction: EFocusDirection) {
