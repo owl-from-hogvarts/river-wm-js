@@ -8,7 +8,7 @@ import { EnterModeAction } from "../object-model/actions/EnterMode";
 import { BaseMode, SwitchableMode } from "../object-model/keyBindings/Mode";
 import { BaseCommand } from "./commands/Command";
 import { CommandMapper, RiverctlFeatures } from "./CommandMapper";
-import { AttachMode, BackgroundColor, BorderColorFocused, BorderColorUnfocused, BorderColorUrgent, BorderWidth, CursorTheme, FocusFollowsCursor, HideCursor, Repeat, mapOptionsToCommands, optionsMap } from "./commands/Options";
+import { mapOptionsToCommands, optionsMap } from "./commands/Options";
 import { DefaultLayout } from "./commands/DefaultLayoutCommand";
 
 
@@ -59,7 +59,21 @@ export class RiverctlExecuter implements IExecuter<RiverctlFeatures> {
       this.commands.push(...commands)
     }
 
-    console.log(this.commands)
+    // for (const command of this.commands) {
+    //   if (!(command instanceof MapCommand) && !((<any>command).cmd instanceof SendLayoutCmdCommand)) {
+    //     continue
+    //   }
+
+    //   console.log(command.toCommandString())
+    //   const c = (<SendLayoutCmdCommand>(<any>command).cmd)
+    //   console.log(c.command, c.args)
+    // }
+    // console.log(this.commands)
+
+    for (const command of this.commands) {
+      this.execute(command)
+    }
+
   }
 
   private applyOptions(options: RiverOptions): BaseCommand[] {
