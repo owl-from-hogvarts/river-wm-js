@@ -8,7 +8,7 @@ import { EnterModeAction } from "../object-model/actions/EnterMode";
 import { BaseMode, SwitchableMode } from "../object-model/keyBindings/Mode";
 import { BaseCommand } from "./commands/Command";
 import { CommandMapper, RiverctlFeatures } from "./CommandMapper";
-import { AttachMode, BackgroundColor, BorderColorFocused, BorderColorUnfocused, BorderColorUrgent, BorderWidth, CursorTheme, FocusFollowsCursor, HideCursor, Repeat } from "./commands/Options";
+import { AttachMode, BackgroundColor, BorderColorFocused, BorderColorUnfocused, BorderColorUrgent, BorderWidth, CursorTheme, FocusFollowsCursor, HideCursor, Repeat, mapOptionsToCommands, optionsMap } from "./commands/Options";
 import { DefaultLayout } from "./commands/DefaultLayoutCommand";
 
 
@@ -58,63 +58,12 @@ export class RiverctlExecuter implements IExecuter<RiverctlFeatures> {
       const commands = this.defineSwitchableMode(mode)
       this.commands.push(...commands)
     }
+
+    console.log(this.commands)
   }
 
   private applyOptions(options: RiverOptions): BaseCommand[] {
-    const optionsCommands: BaseCommand[] = [];
-    if (options.attachMode) {
-      optionsCommands.push(new AttachMode(options.attachMode))
-    }
-
-    if (options.theme) {
-      const { theme } = options
-      // user may want to explicitly set 0
-      // because river's default may be other than zero
-      if (theme.borderWidth !== undefined && theme.borderWidth !== null) {
-        optionsCommands.push(new BorderWidth(theme.borderWidth))
-      }
-
-      if (theme.borderColorFocused) {
-        optionsCommands.push(new BorderColorFocused(theme.borderColorFocused))
-      }
-
-      if (theme.borderColorUnfocused) {
-        optionsCommands.push(new BorderColorUnfocused(theme.borderColorUnfocused))
-      }
-
-      if (theme.borderColorUrgent) {
-        optionsCommands.push(new BorderColorUrgent(theme.borderColorUrgent))
-      }
-
-      if (theme.cursor) {
-        optionsCommands.push(new CursorTheme(theme.cursor.cursorTheme, theme.cursor.size))
-      }
-
-      if (theme.backgroundColor) {
-        optionsCommands.push(new BackgroundColor(theme.backgroundColor))
-      }
-    }
-
-    // enums are numbers, so zero would not pass the check
-    if (options.focusFollowsCursor !== undefined && options.focusFollowsCursor !== null) {
-      optionsCommands.push(new FocusFollowsCursor(options.focusFollowsCursor))
-    }
-
-    if (options.hideCursor) {
-      const { hideCursor } = options
-
-      if (hideCursor.timeout) {
-        optionsCommands.push(new HideCursor(hideCursor.timeout))
-      }
-
-      if (hideCursor.whenTyping) {
-        optionsCommands.push(new HideCursor(hideCursor.whenTyping))
-      }
-    }
-
-    if (options.repeat) {
-      optionsCommands.push(new Repeat(options.repeat.rate, options.repeat.delay))
-    }
+    const optionsCommands: BaseCommand[] = mapOptionsToCommands(options, optionsMap);
 
     return optionsCommands;
   }
