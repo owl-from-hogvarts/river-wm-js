@@ -75,9 +75,6 @@ class PointerAccelCommand extends InputCommand {
 export function createInputMap(deviceType: string) {
   const device = deviceType
   const inputMap: OptionMapperV4<InputDevice> = {
-    // typescript can't properly resolve generics relative to enum types so using cast
-    // also bind can't provide correct types for generic parameters and can't
-    // instantiate EnumCommand generic in place
     events: EnumCommand.bind(null, device, "events", {
       [EEvents.DISABLED]: DISABLED,
       [EEvents.ENABLED]: ENABLED,
