@@ -2,11 +2,13 @@ import { RiverctlFeatures } from "./executers/CommandMapper";
 import { RiverctlExecuter } from "./executers/RiverctlExecuter";
 import { Color } from "./object-model/Color";
 import { EAttachMode, EFocusFollowCursor, River, RiverModesDefinition, RiverOptions } from "./object-model/River";
-import { FocusAction, FocusDirection } from "./object-model/actions/Focus";
+import { CloseAction } from "./object-model/actions/Close";
+import { FocusAction } from "./object-model/actions/Focus";
 import { SendLayoutCmd } from "./object-model/actions/SendLayoutCmd";
 import { SpawnAction } from "./object-model/actions/Spawn";
-import { SwapAction, SwapDirection } from "./object-model/actions/Swap";
+import { SwapAction } from "./object-model/actions/Swap";
 import { ToggleFloatAction } from "./object-model/actions/ToggleFloat";
+import { EBaseDirection } from "./object-model/actions/directions";
 import { EEvents, ETapButtonMap, InputDevices } from "./object-model/input/input";
 import { KeyBinding, Shortcut } from "./object-model/keyBindings/KeyBindings";
 import { BaseMode } from "./object-model/keyBindings/Mode";
@@ -15,16 +17,17 @@ import { Shift, Super } from "./object-model/keyBindings/Modifier";
 const tileManager = "rivertile"
 
 const defaultModeKeyBindings: KeyBinding<RiverctlFeatures>[] = [
-  new KeyBinding(new FocusAction(FocusDirection.PREVIOUS), new Shortcut([Super], "J")),
-  new KeyBinding(new FocusAction(FocusDirection.NEXT), new Shortcut([Super], "K")),
-  new KeyBinding(new SwapAction(SwapDirection.PREVIOUS), new Shortcut([Super, Shift], "J")),
-  new KeyBinding(new SwapAction(SwapDirection.NEXT), new Shortcut([Super, Shift], "K")),
+  new KeyBinding(new FocusAction(EBaseDirection.PREVIOUS), new Shortcut([Super], "J")),
+  new KeyBinding(new FocusAction(EBaseDirection.NEXT), new Shortcut([Super], "K")),
+  new KeyBinding(new SwapAction(EBaseDirection.PREVIOUS), new Shortcut([Super, Shift], "J")),
+  new KeyBinding(new SwapAction(EBaseDirection.NEXT), new Shortcut([Super, Shift], "K")),
   new KeyBinding(new SendLayoutCmd(tileManager, ["main-ratio", "-0.02"]), new Shortcut([Super], "H")),
   new KeyBinding(new SendLayoutCmd(tileManager, ["main-ratio", "+0.02"]), new Shortcut([Super], "L")),
   new KeyBinding(new SendLayoutCmd(tileManager, ["main-count", "+1"]), new Shortcut([Super, Shift], "H")),
   new KeyBinding(new SendLayoutCmd(tileManager, ["main-count", "-1"]), new Shortcut([Super, Shift], "L")),
   new KeyBinding(new ToggleFloatAction(), new Shortcut([Super], "Space"),),
   new KeyBinding(new SpawnAction("rofi", ["-show", "run"]), new Shortcut([Super], "D")),
+  new KeyBinding(new CloseAction(), new Shortcut([Super], "W"))
 ]
 
 const modes: RiverModesDefinition<RiverctlFeatures> = {
