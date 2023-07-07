@@ -10,6 +10,7 @@ import { BaseCommand } from "./commands/Command";
 import { CommandMapper, RiverctlFeatures } from "./CommandMapper";
 import { mapOptionsToCommands, optionsMap } from "./commands/Options";
 import { DefaultLayout } from "./commands/DefaultLayoutCommand";
+import { createInputMap } from "./input/input";
 
 enum SpecialModeIds {
   NORMAL_MODE = "normal",
@@ -37,7 +38,16 @@ export class RiverctlExecuter implements IExecuter<RiverctlFeatures> {
    */
   public apply(river: River<RiverctlFeatures>) {
     const commandsToExecute: BaseCommand[] = [];
-    commandsToExecute.push(new DefaultLayout(river.tileManager));
+    if (river.tileManager) {
+      commandsToExecute.push(new DefaultLayout(river.tileManager));
+    }
+
+    if (river.input) {
+      for (const deviceName in river.input) {
+        const deviceConfigMap = createInputMap(deviceName)
+        commandsToExecute.push(...mapOptionsToCommands(river.input[deviceName], deviceConfigMap))
+      }
+    }
 
     // apply options
     commandsToExecute.push(...this.applyOptions(river.options));

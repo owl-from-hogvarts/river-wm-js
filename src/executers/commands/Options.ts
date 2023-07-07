@@ -34,7 +34,7 @@ type OptionMapperV3<T> = {
     : (arg: T[Key]) => BaseCommand;
 };
 
-type OptionMapperV4<T extends object> = {
+export type OptionMapperV4<T extends object> = {
    [Key in keyof T]-?: Exclude<T[Key], undefined | null> extends object
     ?
         | OptionMapperV4<T[Key]>

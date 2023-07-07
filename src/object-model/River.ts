@@ -1,3 +1,4 @@
+import { InputDevices } from "./input/input";
 import { ICanEnterMode } from "./actions/EnterMode";
 import { ICanFocus } from "./actions/Focus";
 import { ICanMove } from "./actions/Move";
@@ -23,11 +24,19 @@ export type RiverModesDefinition<T> = {
 };
 
 export class River<Features> {
+  public readonly tileManager?: string
+  public readonly input?: InputDevices
+
+  
   constructor(
-    public readonly tileManager: string,
     public readonly modes: RiverModesDefinition<Features>,
-    public readonly options: RiverOptions
-  ) {}
+    public readonly options: RiverOptions,
+    {tileManager, input}: {tileManager?: string,
+    input?: InputDevices} = {}
+  ) {
+    this.tileManager = tileManager,
+    this.input = input
+  }
 }
 
 export enum EAttachMode {

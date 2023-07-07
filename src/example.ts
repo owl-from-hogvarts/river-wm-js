@@ -7,6 +7,7 @@ import { SendLayoutCmd } from "./object-model/actions/SendLayoutCmd";
 import { SpawnAction } from "./object-model/actions/Spawn";
 import { SwapAction, SwapDirection } from "./object-model/actions/Swap";
 import { ToggleFloatAction } from "./object-model/actions/ToggleFloat";
+import { EEvents, ETapButtonMap, InputDevices } from "./object-model/input/input";
 import { KeyBinding, Shortcut } from "./object-model/keyBindings/KeyBindings";
 import { BaseMode } from "./object-model/keyBindings/Mode";
 import { Shift, Super } from "./object-model/keyBindings/Modifier";
@@ -44,7 +45,21 @@ const options: RiverOptions = {
   attachMode: EAttachMode.BOTTOM,
 }
 
-const river = new River(tileManager, modes, options)
+const inputDevices: InputDevices = {
+  "pointer-1267-12608-MSFT0001:01_04F3:3140_Touchpad": {
+    events: EEvents.DISABLED_ON_EXTERNAL_MOUSE,
+    drag: true,
+    tap: true,
+    tapButtonMap: ETapButtonMap.LEFT_RIGHT_MIDDLE,
+    disableWhileTyping: true,
+    scrollMethod: {kind: "two-finger"}
+  }
+}
+
+const river = new River(modes, options, {
+  input: inputDevices,
+  tileManager
+})
 
 const riverctl = new RiverctlExecuter();
 riverctl.apply(river)
