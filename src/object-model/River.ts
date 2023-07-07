@@ -8,6 +8,7 @@ import { ICanSwap } from "./actions/Swap";
 import { ICanToggleFloat } from "./actions/ToggleFloat";
 import { Color } from "./Color";
 import { BaseMode, SwitchableMode } from "./keyBindings/Mode";
+import { ICanClose } from "./actions/Close";
 
 export type FullFeatures<T> = ICanEnterMode<T> &
   ICanFocus<T> &
@@ -15,7 +16,8 @@ export type FullFeatures<T> = ICanEnterMode<T> &
   ICanSpawn<T> &
   ICanSwap<T> &
   ICanToggleFloat<T> &
-  ICanSendLayoutCmd<T>;
+  ICanSendLayoutCmd<T> &
+  ICanClose<T>;
 
 export type RiverModesDefinition<T> = {
   DEFAULT_MODE?: BaseMode<T>;
