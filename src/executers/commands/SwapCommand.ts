@@ -1,19 +1,13 @@
-import { SwapDirection as ESwapDirection } from "../../object-model/actions/Swap";
+import { EBaseDirection } from "../../object-model/actions/directions";
 import { BaseCommand } from "./Command";
-
-const swapDirectionMap: {
-  [Key in ESwapDirection]: string
-} = {
-  [ESwapDirection.NEXT]: "next",
-  [ESwapDirection.PREVIOUS]: "previous"
-}
+import { BaseDirectionMap } from "./directionMap";
 
 export class SwapCommand extends BaseCommand {
   override readonly command: string = "swap";
   override args: string[];
 
-  constructor(swapDirection: ESwapDirection) {
+  constructor(swapDirection: EBaseDirection) {
     super()
-    this.args = [swapDirectionMap[swapDirection]]
+    this.args = [BaseDirectionMap[swapDirection]]
   }
 }

@@ -1,17 +1,11 @@
 import { BaseAction } from "./BaseAction";
-
-export enum MoveDirection {
-  RIGHT = "right",
-  LEFT = "left",
-  UP = "up",
-  DOWN = "down",
-}
+import { EExtendedDirection } from "./directions";
 
 export class MoveAction extends BaseAction<ICanMove<unknown>> {
   override getImplementationDetails<R>(visitor: ICanMove<R>): R {
     return visitor.move(this)
   }
-  constructor(public readonly direction: MoveDirection, public readonly step: number = 100) {
+  constructor(public readonly direction: EExtendedDirection, public readonly step: number = 100) {
     super()
   };
 }

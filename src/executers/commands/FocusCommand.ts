@@ -1,20 +1,14 @@
-import { FocusAction, FocusDirection as EFocusDirection } from "../../object-model/actions/Focus";
+import { EBaseDirection } from "../../object-model/actions/directions";
 import { BaseCommand } from "./Command";
-
-const focusDirectionMap: {
-  [Key in EFocusDirection]: string
-} = {
-  [EFocusDirection.NEXT]: "next",
-  [EFocusDirection.PREVIOUS]: "previous"
-}
+import { BaseDirectionMap } from "./directionMap";
 
 export class FocusCommand extends BaseCommand {
   override readonly command: string = "focus-view";
   override args: string[];
 
-  constructor(direction: EFocusDirection) {
+  constructor(direction: EBaseDirection) {
     super()
 
-    this.args = [focusDirectionMap[direction]]
+    this.args = [BaseDirectionMap[direction]]
   }
 }

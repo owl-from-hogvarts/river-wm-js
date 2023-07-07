@@ -1,7 +1,7 @@
-import { FocusDirection } from "../object-model/actions/Focus";
-import { MoveAction, MoveDirection } from "../object-model/actions/Move";
-import { SwapDirection } from "../object-model/actions/Swap";
+import { EBaseDirection } from "../object-model/actions/directions";
+import { MoveAction } from "../object-model/actions/Move";
 import { FullFeatures } from "../object-model/River";
+import { CloseCommand } from "./commands/CloseCommand";
 import { BaseCommand } from "./commands/Command";
 import { EnterModeCommand } from "./commands/EnterModeCommand";
 import { FocusCommand } from "./commands/FocusCommand";
@@ -75,13 +75,16 @@ export type FeatureReturn = BaseCommand
 export type RiverctlFeatures = FullFeatures<FeatureReturn>;
 
 export class CommandMapper implements RiverctlFeatures {
+  close(): BaseCommand {
+    return new CloseCommand()
+  }
   sendLayoutCmd(tileManager: string, args: string[]): BaseCommand {
     return new SendLayoutCmdCommand(tileManager, args)
   }
   enterMode(enterMode: string): FeatureReturn {
     return new EnterModeCommand(enterMode)
   }
-  focus(focusDirection: FocusDirection): FeatureReturn {
+  focus(focusDirection: EBaseDirection): FeatureReturn {
     return new FocusCommand(focusDirection)
   }
   move(moveAction: MoveAction): FeatureReturn {
@@ -90,7 +93,7 @@ export class CommandMapper implements RiverctlFeatures {
   spawn(command: string, args: string[]): FeatureReturn {
     return new SpawnCommand(command, args)
   }
-  swap(swapDirection: SwapDirection): FeatureReturn {
+  swap(swapDirection: EBaseDirection): FeatureReturn {
     return new SwapCommand(swapDirection)
   }
   toggleFloat(): FeatureReturn {
