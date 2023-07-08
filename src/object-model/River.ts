@@ -9,6 +9,10 @@ import { ICanToggleFloat } from "./actions/ToggleFloat";
 import { Color } from "./Color";
 import { BaseMode, SwitchableMode } from "./keyBindings/Mode";
 import { ICanClose } from "./actions/Close";
+import { ICanSnap } from "./actions/Snap";
+import { ICanToggleFullscreen } from "./actions/ToggleFullscreen";
+import { ICanZoom } from "./actions/Zoom";
+import { ICanFocusOutput, ICanSendToOutput } from "./actions/Output";
 
 export type FullFeatures<T> = ICanEnterMode<T> &
   ICanFocus<T> &
@@ -17,7 +21,12 @@ export type FullFeatures<T> = ICanEnterMode<T> &
   ICanSwap<T> &
   ICanToggleFloat<T> &
   ICanSendLayoutCmd<T> &
-  ICanClose<T>;
+  ICanClose<T> &
+  ICanSnap<T> &
+  ICanToggleFullscreen<T> &
+  ICanZoom<T> &
+  ICanFocusOutput<T> &
+  ICanSendToOutput<T>;
 
 export type RiverModesDefinition<T> = {
   DEFAULT_MODE?: BaseMode<T>;

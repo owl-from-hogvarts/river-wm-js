@@ -1,15 +1,20 @@
-import { EBaseDirection } from "../object-model/actions/directions";
+import { EBaseDirection, EExtendedDirection } from "../object-model/actions/directions";
 import { MoveAction } from "../object-model/actions/Move";
+import { Output } from "../object-model/actions/Output";
 import { FullFeatures } from "../object-model/River";
 import { CloseCommand } from "./commands/CloseCommand";
 import { BaseCommand } from "./commands/Command";
 import { EnterModeCommand } from "./commands/EnterModeCommand";
 import { FocusCommand } from "./commands/FocusCommand";
 import { MoveCommand } from "./commands/MoveCommand";
+import { FocusOutputCommand, SendToOutputCommand } from "./commands/OutputCommands";
 import { SendLayoutCmdCommand } from "./commands/SendLayoutCmd";
+import { SnapCommand } from "./commands/SnapCommand";
 import { SpawnCommand } from "./commands/SpawnCommand";
 import { SwapCommand } from "./commands/SwapCommand";
 import { ToggleFloatCommand } from "./commands/ToggleFloatCommand";
+import { ToggleFullscreenCommand } from "./commands/ToggleFullscreenCommand";
+import { ZoomCommand } from "./commands/ZoomCommand";
 
 // all commands should be registered here
 // const map = new Set<ICommandFactory>()
@@ -75,6 +80,21 @@ export type FeatureReturn = BaseCommand
 export type RiverctlFeatures = FullFeatures<FeatureReturn>;
 
 export class CommandMapper implements RiverctlFeatures {
+  snap(direction: EExtendedDirection): BaseCommand {
+    return new SnapCommand(direction)
+  }
+  toggleFullscreen(): BaseCommand {
+    return new ToggleFullscreenCommand
+  }
+  zoom(): BaseCommand {
+    return new ZoomCommand()
+  }
+  focusOutput(output: Output): BaseCommand {
+    return new FocusOutputCommand(output)
+  }
+  sendToOutput(output: Output): BaseCommand {
+    return new SendToOutputCommand(output)
+  }
   close(): BaseCommand {
     return new CloseCommand()
   }
