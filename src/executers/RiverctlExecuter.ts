@@ -17,7 +17,7 @@ enum SpecialModeIds {
   LOCK_MODE = "lock",
 }
 
-export class RiverctlExecuter implements IExecuter<RiverctlFeatures> {
+export class RiverctlExecuter implements IExecuter<RiverctlFeatures> {  
   private static readonly RIVER_CONFIG_COMMAND = "riverctl";
   private readonly commandMapper = new CommandMapper();
   private readonly execFile = promisify(execFile);
@@ -38,6 +38,13 @@ export class RiverctlExecuter implements IExecuter<RiverctlFeatures> {
    */
   public apply(river: River<RiverctlFeatures>) {
     const commandsToExecute: BaseCommand[] = [];
+    if (river.startupActions) {
+      for (const action of river.startupActions) {
+        const command = action.getImplementationDetails(this.commandMapper)
+        this.execute(command)
+      }
+    }
+    
     if (river.tileManager) {
       commandsToExecute.push(new DefaultLayout(river.tileManager));
     }

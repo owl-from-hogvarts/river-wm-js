@@ -13,6 +13,9 @@ import { ICanSnap } from "./actions/Snap";
 import { ICanToggleFullscreen } from "./actions/ToggleFullscreen";
 import { ICanZoom } from "./actions/Zoom";
 import { ICanFocusOutput, ICanSendToOutput } from "./actions/Output";
+import { ICanResize } from "./actions/Resize";
+import { ICanExit } from "./actions/Exit";
+import { BaseAction } from "./actions/BaseAction";
 
 export type FullFeatures<T> = ICanEnterMode<T> &
   ICanFocus<T> &
@@ -26,7 +29,10 @@ export type FullFeatures<T> = ICanEnterMode<T> &
   ICanToggleFullscreen<T> &
   ICanZoom<T> &
   ICanFocusOutput<T> &
-  ICanSendToOutput<T>;
+  ICanSendToOutput<T> &
+  ICanClose<T> &
+  ICanResize<T> &
+  ICanExit<T>;
 
 export type RiverModesDefinition<T> = {
   DEFAULT_MODE?: BaseMode<T>;
@@ -37,16 +43,17 @@ export type RiverModesDefinition<T> = {
 export class River<Features> {
   public readonly tileManager?: string
   public readonly input?: InputDevices
-
+  public readonly startupActions?: BaseAction<Features>[]
   
   constructor(
     public readonly modes: RiverModesDefinition<Features>,
     public readonly options: RiverOptions,
-    {tileManager, input}: {tileManager?: string,
-    input?: InputDevices} = {}
+    {tileManager, input, startupActions}: {tileManager?: string,
+    input?: InputDevices, startupActions?: BaseAction<Features>[]} = {}
   ) {
     this.tileManager = tileManager,
     this.input = input
+    this.startupActions = startupActions
   }
 }
 

@@ -3,16 +3,21 @@ import { RiverctlExecuter } from "./executers/RiverctlExecuter";
 import { Color } from "./object-model/Color";
 import { EAttachMode, EFocusFollowCursor, River, RiverModesDefinition, RiverOptions } from "./object-model/River";
 import { CloseAction } from "./object-model/actions/Close";
+import { ExitAction } from "./object-model/actions/Exit";
 import { FocusAction } from "./object-model/actions/Focus";
+import { MoveAction } from "./object-model/actions/Move";
+import { EAxis, ResizeAction } from "./object-model/actions/Resize";
 import { SendLayoutCmd } from "./object-model/actions/SendLayoutCmd";
 import { SpawnAction } from "./object-model/actions/Spawn";
 import { SwapAction } from "./object-model/actions/Swap";
 import { ToggleFloatAction } from "./object-model/actions/ToggleFloat";
-import { EBaseDirection } from "./object-model/actions/directions";
+import { ToggleFullscreen } from "./object-model/actions/ToggleFullscreen";
+import { Zoom } from "./object-model/actions/Zoom";
+import { EBaseDirection, EExtendedDirection } from "./object-model/actions/directions";
 import { EEvents, ETapButtonMap, InputDevices } from "./object-model/input/input";
 import { KeyBinding, Shortcut } from "./object-model/keyBindings/KeyBindings";
 import { BaseMode } from "./object-model/keyBindings/Mode";
-import { Shift, Super } from "./object-model/keyBindings/Modifier";
+import { Alt, Ctrl, Shift, Super } from "./object-model/keyBindings/Modifier";
 
 const tileManager = "rivertile"
 
@@ -25,8 +30,22 @@ const defaultModeKeyBindings: KeyBinding<RiverctlFeatures>[] = [
   new KeyBinding(new SendLayoutCmd(tileManager, ["main-ratio", "+0.02"]), new Shortcut([Super], "L")),
   new KeyBinding(new SendLayoutCmd(tileManager, ["main-count", "+1"]), new Shortcut([Super, Shift], "H")),
   new KeyBinding(new SendLayoutCmd(tileManager, ["main-count", "-1"]), new Shortcut([Super, Shift], "L")),
-  new KeyBinding(new ToggleFloatAction(), new Shortcut([Super], "Space"),),
-  new KeyBinding(new SpawnAction("rofi", ["-show", "run"]), new Shortcut([Super], "D")),
+  new KeyBinding(new CloseAction(), new Shortcut([Super], "W")),
+  new KeyBinding(new ToggleFullscreen(), new Shortcut([Super], "F")),
+  new KeyBinding(new ToggleFloatAction(), new Shortcut([Super, Shift], "F"),),
+  new KeyBinding(new SpawnAction("rofi", ["-show", "run"]), new Shortcut([Super], "R")),
+  new KeyBinding(new SpawnAction("rofi", ["-show", "drun"]), new Shortcut([Super], "D")),
+  new KeyBinding(new Zoom(), new Shortcut([Super], "Z")),
+  new KeyBinding(new MoveAction(EExtendedDirection.LEFT), new Shortcut([Super, Alt], "H")),
+  new KeyBinding(new MoveAction(EExtendedDirection.DOWN), new Shortcut([Super, Alt], "J")),
+  new KeyBinding(new MoveAction(EExtendedDirection.UP), new Shortcut([Super, Alt], "K")),
+  new KeyBinding(new MoveAction(EExtendedDirection.RIGHT), new Shortcut([Super, Alt], "L")),
+  new KeyBinding(new ResizeAction(EAxis.HORIZONTAL, -100), new Shortcut([Super, Ctrl], "H")),
+  new KeyBinding(new ResizeAction(EAxis.VERTICAL, -100), new Shortcut([Super, Ctrl], "J")),
+  new KeyBinding(new ResizeAction(EAxis.VERTICAL, +100), new Shortcut([Super, Ctrl], "K")),
+  new KeyBinding(new ResizeAction(EAxis.HORIZONTAL, +100), new Shortcut([Super, Ctrl], "L")),
+  new KeyBinding(new SpawnAction("konsole", []), new Shortcut([Ctrl, Alt], "T")),
+  new KeyBinding(new ExitAction(), new Shortcut([Super, Shift], "Q")),
   new KeyBinding(new CloseAction(), new Shortcut([Super], "W"))
 ]
 
@@ -61,7 +80,12 @@ const inputDevices: InputDevices = {
 
 const river = new River(modes, options, {
   input: inputDevices,
-  tileManager
+  tileManager,
+  startupActions: [
+    new SpawnAction("dbus-update-activation-environment", ["--systemd", "WAYLAND_DISPLAY", "XDG_CURRENT_DESKTOP=river", `XDG_CONFIG_DIRS`]),
+    new SpawnAction("systemctl", ["--user", "import-environment", "WAYLAND_DISPLAY", "XDG_CONFIG_DIRS"]),
+    new SpawnAction("systemctl", ["--user", "set-environment", "XDG_CURRENT_DESKTOP=river", /* `XDG_CONFIG_DIRS=${process.env["XDG_CONFIG_DIRS"]}:/etc/xdg` */])
+  ]
 })
 
 const riverctl = new RiverctlExecuter();

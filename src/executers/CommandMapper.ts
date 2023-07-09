@@ -1,13 +1,16 @@
 import { EBaseDirection, EExtendedDirection } from "../object-model/actions/directions";
 import { MoveAction } from "../object-model/actions/Move";
 import { Output } from "../object-model/actions/Output";
+import { EAxis } from "../object-model/actions/Resize";
 import { FullFeatures } from "../object-model/River";
 import { CloseCommand } from "./commands/CloseCommand";
 import { BaseCommand } from "./commands/Command";
 import { EnterModeCommand } from "./commands/EnterModeCommand";
+import { ExitCommand } from "./commands/ExitCommand";
 import { FocusCommand } from "./commands/FocusCommand";
 import { MoveCommand } from "./commands/MoveCommand";
 import { FocusOutputCommand, SendToOutputCommand } from "./commands/OutputCommands";
+import { ResizeCommand } from "./commands/ResizeCommand";
 import { SendLayoutCmdCommand } from "./commands/SendLayoutCmd";
 import { SnapCommand } from "./commands/SnapCommand";
 import { SpawnCommand } from "./commands/SpawnCommand";
@@ -80,6 +83,12 @@ export type FeatureReturn = BaseCommand
 export type RiverctlFeatures = FullFeatures<FeatureReturn>;
 
 export class CommandMapper implements RiverctlFeatures {
+  exit(): BaseCommand {
+    return new ExitCommand()
+  }
+  resize(axis: EAxis, step: number): BaseCommand {
+    return new ResizeCommand(axis, step)
+  }
   snap(direction: EExtendedDirection): BaseCommand {
     return new SnapCommand(direction)
   }
