@@ -2,6 +2,7 @@ import { RiverctlFeatures } from "./executers/CommandMapper";
 import { RiverctlExecuter } from "./executers/RiverctlExecuter";
 import { Color } from "./object-model/Color";
 import { EAttachMode, EFocusFollowCursor, River, RiverModesDefinition, RiverOptions } from "./object-model/River";
+import { ETagAction, ETagActionScope, TagAction, mapTags } from "./object-model/Tags";
 import { CloseAction } from "./object-model/actions/Close";
 import { ExitAction } from "./object-model/actions/Exit";
 import { FocusAction } from "./object-model/actions/Focus";
@@ -20,6 +21,19 @@ import { BaseMode } from "./object-model/keyBindings/Mode";
 import { Alt, Ctrl, Shift, Super } from "./object-model/keyBindings/Modifier";
 
 const tileManager = "rivertile"
+
+const tagKeySums = {
+  "1": 0b1,
+  "2": 0b10,
+  "3": 0b100,
+  "4": 0b1000,
+  "5": 0b10000,
+  "6": 0b100000,
+}
+
+function mapTagKeySum(keySum: string) {
+  return tagKeySums[keySum as keyof typeof tagKeySums]
+}
 
 const defaultModeKeyBindings: KeyBinding<RiverctlFeatures>[] = [
   new KeyBinding(new FocusAction(EBaseDirection.PREVIOUS), new Shortcut([Super], "J")),
@@ -46,7 +60,11 @@ const defaultModeKeyBindings: KeyBinding<RiverctlFeatures>[] = [
   new KeyBinding(new ResizeAction(EAxis.HORIZONTAL, +100), new Shortcut([Super, Ctrl], "L")),
   new KeyBinding(new SpawnAction("konsole", []), new Shortcut([Ctrl, Alt], "T")),
   new KeyBinding(new ExitAction(), new Shortcut([Super, Shift], "Q")),
-  new KeyBinding(new CloseAction(), new Shortcut([Super], "W"))
+  new KeyBinding(new CloseAction(), new Shortcut([Super], "W")),
+  ...mapTags([Super], Object.getOwnPropertyNames(tagKeySums), TagAction.bind(null, ETagAction.SET, ETagActionScope.FOCUSED), mapTagKeySum),
+  ...mapTags([Super, Ctrl], Object.getOwnPropertyNames(tagKeySums), TagAction.bind(null, ETagAction.SET, ETagActionScope.VIEW), mapTagKeySum),
+  ...mapTags([Super, Shift], Object.getOwnPropertyNames(tagKeySums), TagAction.bind(null, ETagAction.TOGGLE, ETagActionScope.FOCUSED), mapTagKeySum),
+  ...mapTags([Super, Alt], Object.getOwnPropertyNames(tagKeySums), TagAction.bind(null, ETagAction.TOGGLE, ETagActionScope.VIEW), mapTagKeySum),
 ]
 
 const modes: RiverModesDefinition<RiverctlFeatures> = {

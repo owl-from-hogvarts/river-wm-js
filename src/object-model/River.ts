@@ -16,6 +16,7 @@ import { ICanFocusOutput, ICanSendToOutput } from "./actions/Output";
 import { ICanResize } from "./actions/Resize";
 import { ICanExit } from "./actions/Exit";
 import { BaseAction } from "./actions/BaseAction";
+import { ICanTag } from "./Tags";
 
 export type FullFeatures<T> = ICanEnterMode<T> &
   ICanFocus<T> &
@@ -32,7 +33,8 @@ export type FullFeatures<T> = ICanEnterMode<T> &
   ICanSendToOutput<T> &
   ICanClose<T> &
   ICanResize<T> &
-  ICanExit<T>;
+  ICanExit<T> &
+  ICanTag<T>;
 
 export type RiverModesDefinition<T> = {
   DEFAULT_MODE?: BaseMode<T>;
@@ -73,7 +75,16 @@ export type THideCursor = Partial<{
   whenTyping: boolean
 }>
 
+type Filter = {
+  id: string[],
+  title: string[]
+}
+
 export type RiverOptions = Partial<{
+  filter: {
+    clientSideDecorations: Filter,
+    float: Filter
+  }
   attachMode: EAttachMode;
   theme: Partial<{
     borderWidth: number;

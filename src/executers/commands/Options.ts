@@ -34,12 +34,10 @@ type OptionMapperV3<T> = {
     : (arg: T[Key]) => BaseCommand;
 };
 
+type helper<T, Recurse, R> = T extends object ? (T extends any[] ? (new (arg: T[number]) => R) : Recurse | (new (arg: T) => R)) : (new (arg: T) => R);
+
 export type OptionMapperV4<T extends object> = {
-   [Key in keyof T]-?: Exclude<T[Key], undefined | null> extends object
-    ?
-        | OptionMapperV4<T[Key]>
-        | (new (arg: Exclude<T[Key], undefined | null>) => BaseCommand)
-    : new (arg: Exclude<T[Key], undefined | null>) => BaseCommand;
+   [Key in keyof T]-?: helper<Exclude<T[Key], undefined | null>, OptionMapperV4<Exclude<T[Key], undefined | null>>, BaseCommand>
 };
 
 export function mapOptionsToCommands<T extends {[key: string]: any}>(options: T, commandMap: OptionMapperV4<T>) {
@@ -197,8 +195,36 @@ export class Repeat extends BaseCommand {
   }
 }
 
+enum EFilterType {
+  APP_ID = "app-id",
+  TITLE = "title"
+}
+
+export class FilterCommand extends BaseCommand {
+  override readonly args: string[] = [];
+
+  constructor(override readonly command: string, filterType: EFilterType, pattern: string) {
+    super()
+    this.args.push(filterType, pattern)
+  }
+}
+
+// csd stands for client side decorations
+const CSD_FILTER = "csd-filter-add"
+const FLOAT_FILTER = "float-filter-add"
 
 export const optionsMap: OptionMapperV4<RiverOptions> = {
+  filter: {
+    /** Force Client Side Decorations on specified views */
+    clientSideDecorations: {
+      id: FilterCommand.bind(null, CSD_FILTER, EFilterType.APP_ID),
+      title: FilterCommand.bind(null, CSD_FILTER, EFilterType.TITLE)
+    },
+    float: {
+      id: FilterCommand.bind(null, FLOAT_FILTER, EFilterType.APP_ID),
+      title: FilterCommand.bind(null, FLOAT_FILTER, EFilterType.TITLE)
+    }
+  },
   theme: {
     backgroundColor: BackgroundColor,
     borderColorFocused: BorderColorFocused,

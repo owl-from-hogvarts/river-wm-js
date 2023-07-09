@@ -3,6 +3,7 @@ import { MoveAction } from "../object-model/actions/Move";
 import { Output } from "../object-model/actions/Output";
 import { EAxis } from "../object-model/actions/Resize";
 import { FullFeatures } from "../object-model/River";
+import { ETagAction, ETagActionScope } from "../object-model/Tags";
 import { CloseCommand } from "./commands/CloseCommand";
 import { BaseCommand } from "./commands/Command";
 import { EnterModeCommand } from "./commands/EnterModeCommand";
@@ -15,6 +16,7 @@ import { SendLayoutCmdCommand } from "./commands/SendLayoutCmd";
 import { SnapCommand } from "./commands/SnapCommand";
 import { SpawnCommand } from "./commands/SpawnCommand";
 import { SwapCommand } from "./commands/SwapCommand";
+import { TagCommad } from "./commands/TagCommand";
 import { ToggleFloatCommand } from "./commands/ToggleFloatCommand";
 import { ToggleFullscreenCommand } from "./commands/ToggleFullscreenCommand";
 import { ZoomCommand } from "./commands/ZoomCommand";
@@ -83,6 +85,9 @@ export type FeatureReturn = BaseCommand
 export type RiverctlFeatures = FullFeatures<FeatureReturn>;
 
 export class CommandMapper implements RiverctlFeatures {
+  tag(action: ETagAction, scope: ETagActionScope, tag: number): BaseCommand {
+    return new TagCommad(action, scope, tag)
+  }
   exit(): BaseCommand {
     return new ExitCommand()
   }
