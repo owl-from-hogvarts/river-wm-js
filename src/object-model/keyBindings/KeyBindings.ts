@@ -1,39 +1,10 @@
-import { Modifier } from "./Modifier";
-import { IModifiersFormatter } from "./IModifiersFormatter";
 import { BaseAction } from "../actions/BaseAction";
-
-
-interface RELEASE {
-  kind: "release"
-}
-
-interface REPEAT {
-  kind: "repeat"
-}
-
-interface LAYOUT {
-  kind: "layout",
-  index: number
-}
-
-export type EKeyBindingFlags = RELEASE | REPEAT | LAYOUT
+import { KeyboardShortcut } from "./Shortcut";
 
 export class KeyBinding<T> {
   constructor(
     public readonly action: BaseAction<T>,
-    public readonly shortcut: Shortcut,
+    public readonly shortcut: KeyboardShortcut,
   ) {}
-}
-
-export class Shortcut {
-  constructor(
-    public readonly modifiers: Modifier[],
-    public readonly key: string,
-    public readonly flag?: EKeyBindingFlags,
-  ) {}
-
-  getModifiersFormatted(format: IModifiersFormatter): string {
-    return format(this.modifiers);
-  }
 }
 

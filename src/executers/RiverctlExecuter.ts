@@ -53,26 +53,6 @@ export class RiverctlExecuter implements IExecuter<RiverctlFeatures> {
     ]);
   }
 
-  private defineSpecialModes(river: River<RiverctlFeatures>): BaseCommand[] {
-    const commands: BaseCommand[] = [];
-
-    const { specialModes } = river.modes;
-    for (const modeKeyString in specialModes) {
-      const modeKey = <keyof typeof specialModes>modeKeyString;
-      const mode = specialModes[modeKey];
-      if (mode) {
-        commands.push(
-          ...this.defineKeyBindingsForSpecialMode(
-            mode,
-            ModeKeyToModeIdMap[modeKey]
-          )
-        );
-      }
-    }
-
-    return commands;
-  }
-
   private processSetupActions(river: River<RiverctlFeatures>): BaseCommand[] {
     const commands: BaseCommand[] = [];
 
@@ -108,17 +88,6 @@ export class RiverctlExecuter implements IExecuter<RiverctlFeatures> {
           ...mapOptionsToCommands(river.input[deviceName], deviceConfigMap)
         );
       }
-    }
-
-    return commands;
-  }
-
-  private defineOtherModes(river: River<RiverctlFeatures>): BaseCommand[] {
-    const commands: BaseCommand[] = [];
-
-    for (const mode of river.modes.otherModes) {
-      const modeCommands = this.defineSwitchableMode(river, mode);
-      commands.push(...modeCommands);
     }
 
     return commands;
@@ -176,7 +145,7 @@ export class RiverctlExecuter implements IExecuter<RiverctlFeatures> {
       for (const keyBinding of mode.bindings.keyboard) {
         const mapDescription: MapDescription = {
           cmd: keyBinding.action.getImplementationDetails(this.commandMapper),
-          modeName: modeId,
+          mode: modeId,
           shortcut: keyBinding.shortcut,
         };
 
@@ -192,7 +161,7 @@ export class RiverctlExecuter implements IExecuter<RiverctlFeatures> {
 
         const mapDescription: MapPointerDescription = {
           mode: modeId,
-          pointerShortcut: pointerBinding.shortcut,
+          shortcut: pointerBinding.shortcut,
           cmd:
             action instanceof BaseAction
               ? action.getImplementationDetails(this.commandMapper)
@@ -200,7 +169,38 @@ export class RiverctlExecuter implements IExecuter<RiverctlFeatures> {
         };
 
         commands.push(
-          new MapPointerCommand(<Required<MapPointerDescription>>mapDescription)
+          new MapPointerCommand(mapDescription)
+        );
+      }
+    }
+
+    return commands;
+  }
+
+  private defineOtherModes(river: River<RiverctlFeatures>): BaseCommand[] {
+    const commands: BaseCommand[] = [];
+
+    for (const mode of river.modes.otherModes) {
+      commands.push(...this.defineSwitchableMode(river, mode));
+    }
+
+    return commands;
+  }
+
+
+  private defineSpecialModes(river: River<RiverctlFeatures>): BaseCommand[] {
+    const commands: BaseCommand[] = [];
+
+    const { specialModes } = river.modes;
+    for (const modeKeyString in specialModes) {
+      const modeKey = <keyof typeof specialModes>modeKeyString;
+      const mode = specialModes[modeKey];
+      if (mode) {
+        commands.push(
+          ...this.defineKeyBindingsForSpecialMode(
+            mode,
+            ModeKeyToModeIdMap[modeKey]
+          )
         );
       }
     }
@@ -239,7 +239,7 @@ export class RiverctlExecuter implements IExecuter<RiverctlFeatures> {
     }
 
     const mapEnterMode = new MapCommand({
-      modeName: fallbackModeId,
+      mode: fallbackModeId,
       shortcut: mode.toggleModeKeyBinding,
       cmd: new EnterModeAction(mode.name).getImplementationDetails(
         this.commandMapper
@@ -247,7 +247,7 @@ export class RiverctlExecuter implements IExecuter<RiverctlFeatures> {
     });
 
     const mapExitMode = new MapCommand({
-      modeName: mode.name,
+      mode: mode.name,
       shortcut: mode.toggleModeKeyBinding,
       cmd: new EnterModeAction(fallbackModeId).getImplementationDetails(
         this.commandMapper

@@ -1,5 +1,6 @@
-import { KeyBinding, Shortcut } from "./KeyBindings";
+import { KeyBinding } from "./KeyBindings";
 import { PointerBinding } from "./PointerBindings";
+import { KeyboardShortcut } from "./Shortcut";
 
 type Bindings<T> = {
   keyboard?: KeyBinding<T>[];
@@ -21,7 +22,7 @@ export abstract class NamedMode<T> extends BaseMode<T> {
 export class SwitchableMode<T> extends NamedMode<T> {
   constructor(
     name: string,
-    public readonly toggleModeKeyBinding: Shortcut,
+    public readonly toggleModeKeyBinding: KeyboardShortcut,
     public readonly fallBackMode: NamedMode<T> | BaseMode<T>,
     bindings: Bindings<T>
   ) {

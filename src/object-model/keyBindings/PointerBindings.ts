@@ -1,5 +1,5 @@
 import { BaseAction } from "../actions/BaseAction";
-import { Modifier } from "./Modifier";
+import { PointerShortcut } from "./Shortcut";
 
 export const BTN_LEFT = "BTN_LEFT"
 export const BTN_RIGHT = "BTN_RIGHT"
@@ -16,12 +16,4 @@ export class PointerBinding<T> {
     public readonly shortcut: PointerShortcut
   ) {}
 }
-
-export class PointerShortcut {
-  constructor(
-    public readonly modifiers: Modifier[],
-    public readonly button: string,
-  ) {}
-}
-
 

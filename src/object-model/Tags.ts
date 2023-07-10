@@ -1,6 +1,7 @@
 import { BaseAction } from "./actions/BaseAction";
-import { KeyBinding, Shortcut } from "./keyBindings/KeyBindings";
+import { KeyBinding } from "./keyBindings/KeyBindings";
 import { Modifier } from "./keyBindings/Modifier";
+import { KeyboardShortcut } from "./keyBindings/Shortcut";
 
 export type Tag = number;
 
@@ -60,7 +61,7 @@ export function mapTags(
 
   for (const keySum of keySums) {
     const tag = tagFunction(keySum);
-    tagKeyBindings.push(new KeyBinding(new TagActionConstructor(tag), new Shortcut(modifiers, keySum)));
+    tagKeyBindings.push(new KeyBinding(new TagActionConstructor(tag), new KeyboardShortcut(modifiers, keySum)));
   }
 
   return tagKeyBindings

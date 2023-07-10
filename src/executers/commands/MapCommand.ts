@@ -1,14 +1,13 @@
-import { Shortcut } from "../../object-model/keyBindings/KeyBindings";
 import { Modifier } from "../../object-model/keyBindings/Modifier";
 import {
   EPointerCommand,
-  PointerShortcut,
 } from "../../object-model/keyBindings/PointerBindings";
+import { KeyboardShortcut, PointerShortcut } from "../../object-model/keyBindings/Shortcut";
 import { BaseCommand } from "./Command";
 
 export type MapDescription = {
-  modeName: string;
-  shortcut: Shortcut;
+  mode: string;
+  shortcut: KeyboardShortcut;
   cmd: BaseCommand;
 };
 
@@ -17,13 +16,13 @@ function formatModifiers(modifiers: Modifier[]): string {
 }
 
 export class MapCommand extends BaseCommand {
-  override command = "map";
+  override readonly command: string = "map";
   private readonly baseArguments;
 
   constructor(private readonly mapDescription: MapDescription) {
     super();
     this.baseArguments = [
-      this.mapDescription.modeName,
+      this.mapDescription.mode,
       this.mapDescription.shortcut.getModifiersFormatted(formatModifiers),
       this.mapDescription.shortcut.key,
       this.mapDescription.cmd.command,
@@ -55,7 +54,7 @@ export const PointerCommandMap = {
 
 export type MapPointerDescription = {
   mode: string;
-  pointerShortcut: PointerShortcut;
+  shortcut: PointerShortcut;
   cmd: BaseCommand | string;
 };
 
@@ -65,11 +64,11 @@ export class MapPointerCommand extends BaseCommand {
 
   constructor(description: MapPointerDescription) {
     super();
-    const modifiers = formatModifiers(description.pointerShortcut.modifiers);
+    const modifiers = formatModifiers(description.shortcut.modifiers);
     this.args.push(
       description.mode,
       modifiers,
-      description.pointerShortcut.button
+      description.shortcut.key
     );
 
     if (typeof description.cmd === "string") {
