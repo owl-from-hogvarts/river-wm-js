@@ -15,7 +15,7 @@ import {
 } from "./commands/MapCommand";
 import { DeclareMode } from "./commands/DeclareModeCommand";
 import { EnterModeAction } from "../object-model/actions/EnterMode";
-import { BaseMode, SwitchableMode } from "../object-model/keyBindings/Mode";
+import { BaseMode, NamedMode, SwitchableMode } from "../object-model/keyBindings/Mode";
 import { BaseCommand } from "./commands/Command";
 import { CommandMapper, RiverctlFeatures } from "./CommandMapper";
 import { mapOptionsToCommands, optionsMap } from "./commands/Options";
@@ -230,7 +230,7 @@ export class RiverctlExecuter implements IExecuter<RiverctlFeatures> {
     const modeDeclaration = new DeclareMode(mode.name);
 
     const fallbackModeId =
-      mode.fallBackMode instanceof SwitchableMode
+      mode.fallBackMode instanceof NamedMode
         ? mode.fallBackMode.name
         : this.lookupModeIdByMode(river, mode);
 
@@ -261,12 +261,12 @@ export class RiverctlExecuter implements IExecuter<RiverctlFeatures> {
 
   private lookupModeIdByMode(
     river: River<RiverctlFeatures>,
-    mode: SwitchableMode<RiverctlFeatures>
+    mode: BaseMode<RiverctlFeatures>
   ): string | undefined {
     for (const modeKeyString in river.modes.specialModes) {
       const modeKey = <keyof typeof river.modes.specialModes>modeKeyString;
       const baseMode = river.modes.specialModes[modeKey];
-      if (baseMode && mode.fallBackMode.id === baseMode.id) {
+      if (baseMode && mode.id === baseMode.id) {
         return ModeKeyToModeIdMap[modeKey];
       }
     }

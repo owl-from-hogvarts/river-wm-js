@@ -1,4 +1,3 @@
-import { SwitchableMode } from "../keyBindings/Mode";
 import { BaseAction } from "./BaseAction";
 
 export class EnterModeAction extends BaseAction<ICanEnterMode<unknown>> {

@@ -2,27 +2,30 @@ import { KeyBinding, Shortcut } from "./KeyBindings";
 import { PointerBinding } from "./PointerBindings";
 
 type Bindings<T> = {
-  keyboard?: KeyBinding<T>[],
-  pointer?: PointerBinding<T>[]
-}
+  keyboard?: KeyBinding<T>[];
+  pointer?: PointerBinding<T>[];
+};
 
 export class BaseMode<T> {
-  public readonly id = Symbol()
-  
-  constructor(
-    public readonly bindings: Bindings<T>
-    
-  ) {}
+  public readonly id = Symbol();
+
+  constructor(public readonly bindings: Bindings<T>) {}
 }
 
-export class SwitchableMode<T> extends BaseMode<T> {
+export abstract class NamedMode<T> extends BaseMode<T> {
+  constructor(public readonly name: string, bindings: Bindings<T>) {
+    super(bindings)
+  }
+}
+
+export class SwitchableMode<T> extends NamedMode<T> {
   constructor(
-    public readonly name: string,
+    name: string,
     public readonly toggleModeKeyBinding: Shortcut,
-    public readonly fallBackMode: SwitchableMode<T> | BaseMode<T>,
+    public readonly fallBackMode: NamedMode<T> | BaseMode<T>,
     bindings: Bindings<T>
   ) {
-    super(bindings);
+    super(name, bindings);
   }
 }
 
