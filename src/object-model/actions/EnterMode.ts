@@ -7,9 +7,9 @@ export class EnterModeAction extends BaseAction<ICanEnterMode<unknown>> {
   }
   public readonly modeName: string;
 
-  constructor(mode: SwitchableMode<ICanEnterMode<unknown>>) {
+  constructor(mode: string) {
     super();
-    this.modeName = mode.name;
+    this.modeName = mode;
   }
 }
 

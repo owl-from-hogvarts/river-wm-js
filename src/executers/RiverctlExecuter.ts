@@ -1,7 +1,11 @@
 import { IExecuter } from "./IExecuter";
 import { execFile } from "node:child_process";
 import { promisify } from "node:util";
-import { River, RiverOptions } from "../object-model/River";
+import {
+  River,
+  RiverModesDefinition,
+  RiverOptions,
+} from "../object-model/River";
 import {
   MapCommand,
   MapDescription,
@@ -24,6 +28,15 @@ enum SpecialModeIds {
   LOCK_MODE = "lock",
 }
 
+const ModeKeyToModeIdMap: {
+  [Key in keyof Required<
+    RiverModesDefinition<RiverctlFeatures>
+  >["specialModes"]]-?: SpecialModeIds;
+} = {
+  DEFAULT_MODE: SpecialModeIds.NORMAL_MODE,
+  LOCK_MODE: SpecialModeIds.NORMAL_MODE,
+};
+
 export class RiverctlExecuter implements IExecuter<RiverctlFeatures> {
   private static readonly RIVER_CONFIG_COMMAND = "riverctl";
   private readonly commandMapper = new CommandMapper();
@@ -42,20 +55,19 @@ export class RiverctlExecuter implements IExecuter<RiverctlFeatures> {
 
   private defineSpecialModes(river: River<RiverctlFeatures>): BaseCommand[] {
     const commands: BaseCommand[] = [];
-    console.dir(river)
 
-    if (river.modes.DEFAULT_MODE) {
-      commands.push(...this.defineKeyBindingsForSpecialMode(
-        river.modes.DEFAULT_MODE,
-        SpecialModeIds.NORMAL_MODE
-      ));
-    }
-
-    if (river.modes.LOCK_MODE) {
-      commands.push(...this.defineKeyBindingsForSpecialMode(
-        river.modes.LOCK_MODE,
-        SpecialModeIds.LOCK_MODE
-      ));
+    const { specialModes } = river.modes;
+    for (const modeKeyString in specialModes) {
+      const modeKey = <keyof typeof specialModes>modeKeyString;
+      const mode = specialModes[modeKey];
+      if (mode) {
+        commands.push(
+          ...this.defineKeyBindingsForSpecialMode(
+            mode,
+            ModeKeyToModeIdMap[modeKey]
+          )
+        );
+      }
     }
 
     return commands;
@@ -105,7 +117,7 @@ export class RiverctlExecuter implements IExecuter<RiverctlFeatures> {
     const commands: BaseCommand[] = [];
 
     for (const mode of river.modes.otherModes) {
-      const modeCommands = this.defineSwitchableMode(mode);
+      const modeCommands = this.defineSwitchableMode(river, mode);
       commands.push(...modeCommands);
     }
 
@@ -114,7 +126,7 @@ export class RiverctlExecuter implements IExecuter<RiverctlFeatures> {
 
   private executeCommands(commands: BaseCommand[]): void {
     for (const command of commands) {
-      console.log(`executing: ${command.command} ${command.args}`)
+      // console.log(`executing: ${command.command} ${command.args}`)
       this.execute(command);
     }
   }
@@ -127,7 +139,7 @@ export class RiverctlExecuter implements IExecuter<RiverctlFeatures> {
     commands.push(...this.processSetupActions(river));
     commands.push(...this.setupTileManager(river));
     commands.push(...this.applyOptions(river.options));
-    commands.push(...this.setupInputDevicesSettings(river))
+    commands.push(...this.setupInputDevicesSettings(river));
     commands.push(...this.defineSpecialModes(river));
     commands.push(...this.defineOtherModes(river));
     // left for debugging
@@ -142,7 +154,6 @@ export class RiverctlExecuter implements IExecuter<RiverctlFeatures> {
     // }
     // console.log(this.commands)
 
-    console.log(commands)
     this.executeCommands(commands);
   }
 
@@ -205,6 +216,7 @@ export class RiverctlExecuter implements IExecuter<RiverctlFeatures> {
   }
 
   private defineSwitchableMode(
+    river: River<RiverctlFeatures>,
     mode: SwitchableMode<RiverctlFeatures>
   ): BaseCommand[] {
     // declare mode
@@ -217,10 +229,19 @@ export class RiverctlExecuter implements IExecuter<RiverctlFeatures> {
     this.definedModes.add(mode.name);
     const modeDeclaration = new DeclareMode(mode.name);
 
+    const fallbackModeId =
+      mode.fallBackMode instanceof SwitchableMode
+        ? mode.fallBackMode.name
+        : this.lookupModeIdByMode(river, mode);
+
+    if (!fallbackModeId) {
+      throw new Error(`Unknown mode specified as fallback for mode "${mode.name}"`)
+    }
+
     const mapEnterMode = new MapCommand({
-      modeName: mode.fallBackMode.name,
+      modeName: fallbackModeId,
       shortcut: mode.toggleModeKeyBinding,
-      cmd: new EnterModeAction(mode).getImplementationDetails(
+      cmd: new EnterModeAction(mode.name).getImplementationDetails(
         this.commandMapper
       ),
     });
@@ -228,7 +249,7 @@ export class RiverctlExecuter implements IExecuter<RiverctlFeatures> {
     const mapExitMode = new MapCommand({
       modeName: mode.name,
       shortcut: mode.toggleModeKeyBinding,
-      cmd: new EnterModeAction(mode.fallBackMode).getImplementationDetails(
+      cmd: new EnterModeAction(fallbackModeId).getImplementationDetails(
         this.commandMapper
       ),
     });
@@ -236,5 +257,18 @@ export class RiverctlExecuter implements IExecuter<RiverctlFeatures> {
     const keyBindings = this.defineBindingsForMode(mode, mode.name);
 
     return [modeDeclaration, ...keyBindings, mapEnterMode, mapExitMode];
+  }
+
+  private lookupModeIdByMode(
+    river: River<RiverctlFeatures>,
+    mode: SwitchableMode<RiverctlFeatures>
+  ): string | undefined {
+    for (const modeKeyString in river.modes.specialModes) {
+      const modeKey = <keyof typeof river.modes.specialModes>modeKeyString;
+      const baseMode = river.modes.specialModes[modeKey];
+      if (baseMode && mode.fallBackMode.id === baseMode.id) {
+        return ModeKeyToModeIdMap[modeKey];
+      }
+    }
   }
 }

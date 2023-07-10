@@ -74,8 +74,10 @@ const defaultModePointerBindings: PointerBinding<RiverctlFeatures>[] = [
 ]
 
 const modes: RiverModesDefinition<RiverctlFeatures> = {
-  DEFAULT_MODE: new BaseMode({keyboard: defaultModeKeyBindings, pointer: defaultModePointerBindings}),
-  LOCK_MODE: new BaseMode({}),
+  specialModes: {
+    DEFAULT_MODE: new BaseMode({keyboard: defaultModeKeyBindings, pointer: defaultModePointerBindings}),
+    LOCK_MODE: new BaseMode({}),
+  },
   otherModes: []
 }
 

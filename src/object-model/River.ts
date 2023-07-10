@@ -37,8 +37,10 @@ export type FullFeatures<T> = ICanEnterMode<T> &
   ICanTag<T>;
 
 export type RiverModesDefinition<T> = {
-  DEFAULT_MODE?: BaseMode<T>;
-  LOCK_MODE?: BaseMode<T>;
+  specialModes?: {
+    DEFAULT_MODE?: BaseMode<T>;
+    LOCK_MODE?: BaseMode<T>;
+  }
   otherModes: SwitchableMode<T>[];
 };
 
