@@ -7,7 +7,7 @@ import { ICanSpawn } from "./actions/Spawn";
 import { ICanSwap } from "./actions/Swap";
 import { ICanToggleFloat } from "./actions/ToggleFloat";
 import { Color } from "./Color";
-import { BaseMode, SwitchableMode } from "./keyBindings/Mode";
+import { BaseMode, EnterableMode, SwitchableMode } from "./keyBindings/Mode";
 import { ICanClose } from "./actions/Close";
 import { ICanSnap } from "./actions/Snap";
 import { ICanToggleFullscreen } from "./actions/ToggleFullscreen";
@@ -41,7 +41,8 @@ export type RiverModesDefinition<T> = {
     DEFAULT_MODE?: BaseMode<T>;
     LOCK_MODE?: BaseMode<T>;
   }
-  otherModes: SwitchableMode<T>[];
+  // too complicated to do this the "right" way
+  otherModes: (SwitchableMode<T> | EnterableMode<T>)[];
 };
 
 export class River<Features> {

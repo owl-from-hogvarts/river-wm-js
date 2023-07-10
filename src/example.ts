@@ -115,7 +115,7 @@ const river = new River(modes, options, {
   ]
 })
 
-const riverctl = new RiverctlExecuter();
-riverctl.apply(river)
+const riverctl = new RiverctlExecuter(river);
+riverctl.apply()
 
 

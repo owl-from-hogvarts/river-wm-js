@@ -30,3 +30,22 @@ export class SwitchableMode<T> extends NamedMode<T> {
   }
 }
 
+export const ALL = "all"
+
+export class EnterableMode<T> extends NamedMode<T> {
+  /**
+   * 
+   * @param name 
+   * @param enterModeShortcut 
+   * @param baseMode array of modes, from which this one will be enterable
+   * @param bindings 
+   */
+  constructor(
+    name: string,
+    public readonly enterModeShortcut: KeyboardShortcut,
+    public readonly baseModes: NamedMode<T>[] | typeof ALL,
+    bindings: Bindings<T>,
+  ) {
+    super(name, bindings);
+  }
+}
