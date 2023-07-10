@@ -33,39 +33,15 @@ export class RiverctlExecuter implements IExecuter<RiverctlFeatures> {
     ]);
   }
 
-  /**
-   * Applies configuration right now
-   */
-  public apply(river: River<RiverctlFeatures>) {
-    const commandsToExecute: BaseCommand[] = [];
-    if (river.startupActions) {
-      for (const action of river.startupActions) {
-        const command = action.getImplementationDetails(this.commandMapper)
-        this.execute(command)
-      }
-    }
+  private defineSpecialModes(river: River<RiverctlFeatures>): BaseCommand[] {
+    const commands: BaseCommand[] = []
     
-    if (river.tileManager) {
-      commandsToExecute.push(new DefaultLayout(river.tileManager));
-    }
-
-    if (river.input) {
-      for (const deviceName in river.input) {
-        const deviceConfigMap = createInputMap(deviceName)
-        commandsToExecute.push(...mapOptionsToCommands(river.input[deviceName], deviceConfigMap))
-      }
-    }
-
-    // apply options
-    commandsToExecute.push(...this.applyOptions(river.options));
-    // apply key bindings
-
     if (river.modes.DEFAULT_MODE) {
       const commands = this.defineKeyBindingsForSpecialMode(
         river.modes.DEFAULT_MODE,
         SpecialModeIds.NORMAL_MODE
       );
-      commandsToExecute.push(...commands);
+      commands.push(...commands);
     }
 
     if (river.modes.LOCK_MODE) {
@@ -73,14 +49,76 @@ export class RiverctlExecuter implements IExecuter<RiverctlFeatures> {
         river.modes.LOCK_MODE,
         SpecialModeIds.LOCK_MODE
       );
-      commandsToExecute.push(...commands);
+      commands.push(...commands);
     }
+
+    return commands;
+  }
+
+  private processSetupActions(river: River<RiverctlFeatures>): BaseCommand[] {
+    const commands: BaseCommand[] = []
+    
+    if (river.startupActions) {
+      for (const action of river.startupActions) {
+        const command = action.getImplementationDetails(this.commandMapper)
+        commands.push(command)
+      }
+    }
+
+    return commands;
+  }
+
+  private setupTileManager(river: River<RiverctlFeatures>): BaseCommand[] {
+    const commands: BaseCommand[] = []
+    
+    if (river.tileManager) {
+      commands.push(new DefaultLayout(river.tileManager));
+    }
+
+    return commands;
+  }
+
+  private setupInputDevicesSettings(river: River<RiverctlFeatures>): BaseCommand[] {
+    const commands: BaseCommand[] = []
+    
+    if (river.input) {
+      for (const deviceName in river.input) {
+        const deviceConfigMap = createInputMap(deviceName)
+        commands.push(...mapOptionsToCommands(river.input[deviceName], deviceConfigMap))
+      }
+    }
+
+    return commands;
+  }
+
+  private defineOtherModes(river: River<RiverctlFeatures>): BaseCommand[] {
+    const commands: BaseCommand[] = []
 
     for (const mode of river.modes.otherModes) {
-      const commands = this.defineSwitchableMode(mode);
-      commandsToExecute.push(...commands);
+      const modeCommands = this.defineSwitchableMode(mode);
+      commands.push(...modeCommands);
     }
 
+    return commands;
+  }
+
+  private executeCommands(commands: BaseCommand[]): void {
+    for (const command of commands) {
+      this.execute(command);
+    }
+  }
+
+  /**
+   * Applies configuration right now
+   */
+  public apply(river: River<RiverctlFeatures>) {
+    const commands: BaseCommand[] = [];
+    commands.push(...this.processSetupActions(river))
+    commands.push(...this.setupTileManager(river))
+    commands.push(...this.applyOptions(river.options));
+    commands.push(...this.defineSpecialModes(river))
+    commands.push(...this.defineOtherModes(river))
+    // left for debugging
     // for (const command of this.commands) {
     //   if (!(command instanceof MapCommand) && !((<any>command).cmd instanceof SendLayoutCmdCommand)) {
     //     continue
@@ -92,9 +130,8 @@ export class RiverctlExecuter implements IExecuter<RiverctlFeatures> {
     // }
     // console.log(this.commands)
 
-    for (const command of commandsToExecute) {
-      this.execute(command);
-    }
+    this.executeCommands(commands);
+
   }
 
   private applyOptions(options: RiverOptions): BaseCommand[] {
