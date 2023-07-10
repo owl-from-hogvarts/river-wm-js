@@ -2,7 +2,7 @@ import { IExecuter } from "./IExecuter";
 import { execFile } from "node:child_process";
 import { promisify } from "node:util";
 import { River, RiverOptions } from "../object-model/River";
-import { MapCommand } from "./commands/MapCommand";
+import { MapCommand, MapDescription } from "./commands/MapCommand";
 import { DeclareMode } from "./commands/DeclareModeCommand";
 import { EnterModeAction } from "../object-model/actions/EnterMode";
 import { BaseMode, SwitchableMode } from "../object-model/keyBindings/Mode";
@@ -113,11 +113,13 @@ export class RiverctlExecuter implements IExecuter<RiverctlFeatures> {
     const commands: BaseCommand[] = [];
 
     for (const keyBinding of mode.keyBindings) {
-      const mapCommand = new MapCommand(
-        modeId,
-        keyBinding.shortcut,
-        keyBinding.action.getImplementationDetails(this.commandMapper)
-      );
+      const mapDescription: MapDescription = {
+        cmd: keyBinding.action.getImplementationDetails(this.commandMapper),
+        modeName: modeId,
+        shortcut: keyBinding.shortcut,
+      }
+      
+      const mapCommand = new MapCommand(mapDescription);
 
       commands.push(mapCommand);
     }
@@ -145,19 +147,20 @@ export class RiverctlExecuter implements IExecuter<RiverctlFeatures> {
     this.definedModes.add(mode.name);
     const modeDeclaration = new DeclareMode(mode.name);
 
-    const mapEnterMode = new MapCommand(
-      mode.fallBackMode.name,
-      mode.toggleModeKeyBinding,
-      new EnterModeAction(mode).getImplementationDetails(this.commandMapper)
-    );
+    
+    const mapEnterMode = new MapCommand({
+      modeName: mode.fallBackMode.name,
+      shortcut: mode.toggleModeKeyBinding,
+      cmd: new EnterModeAction(mode).getImplementationDetails(this.commandMapper)
+    });
 
-    const mapExitMode = new MapCommand(
-      mode.name,
-      mode.toggleModeKeyBinding,
-      new EnterModeAction(mode.fallBackMode).getImplementationDetails(
+    const mapExitMode = new MapCommand({
+      modeName: mode.name,
+      shortcut: mode.toggleModeKeyBinding,
+      cmd: new EnterModeAction(mode.fallBackMode).getImplementationDetails(
         this.commandMapper
       )
-    );
+    });
 
     const keyBindings = this.defineKeybindingsForMode(mode, mode.name);
 

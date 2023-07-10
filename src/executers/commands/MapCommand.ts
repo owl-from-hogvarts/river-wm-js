@@ -2,11 +2,10 @@ import { EKeyBindingFlags, Shortcut } from "../../object-model/keyBindings/KeyBi
 import { Modifier } from "../../object-model/keyBindings/Modifier";
 import { BaseCommand } from "./Command";
 
-type MapDescription = {
+export type MapDescription = {
   modeName: string,
   shortcut: Shortcut,
   cmd: BaseCommand,
-  flag?: EKeyBindingFlags
 }
 
 export class MapCommand extends BaseCommand {
@@ -30,11 +29,13 @@ export class MapCommand extends BaseCommand {
   override get args(): string[] {
     const commandArgs = []
     
-    if (this.mapDescription.flag) {
-      commandArgs.push(this.mapDescription.flag.kind)
+    const { shortcut } = this.mapDescription;
 
-      if (this.mapDescription.flag.kind === "layout") {
-        commandArgs.push(this.mapDescription.flag.index.toFixed())
+    if (shortcut.flag) {
+      commandArgs.push(shortcut.flag.kind)
+
+      if (shortcut.flag.kind === "layout") {
+        commandArgs.push(shortcut.flag.index.toFixed())
       }
     }
 

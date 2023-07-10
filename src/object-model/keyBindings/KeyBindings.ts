@@ -22,14 +22,14 @@ export class KeyBinding<T> {
   constructor(
     public readonly action: BaseAction<T>,
     public readonly shortcut: Shortcut,
-    public readonly flag?: EKeyBindingFlags
   ) {}
 }
 
 export class Shortcut {
   constructor(
     public readonly modifiers: Modifier[],
-    public readonly key: string
+    public readonly key: string,
+    public readonly flag?: EKeyBindingFlags,
   ) {}
 
   getModifiersFormatted(format: IModifiersFormatter): string {
