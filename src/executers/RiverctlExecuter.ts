@@ -42,21 +42,20 @@ export class RiverctlExecuter implements IExecuter<RiverctlFeatures> {
 
   private defineSpecialModes(river: River<RiverctlFeatures>): BaseCommand[] {
     const commands: BaseCommand[] = [];
+    console.dir(river)
 
     if (river.modes.DEFAULT_MODE) {
-      const commands = this.defineKeyBindingsForSpecialMode(
+      commands.push(...this.defineKeyBindingsForSpecialMode(
         river.modes.DEFAULT_MODE,
         SpecialModeIds.NORMAL_MODE
-      );
-      commands.push(...commands);
+      ));
     }
 
     if (river.modes.LOCK_MODE) {
-      const commands = this.defineKeyBindingsForSpecialMode(
+      commands.push(...this.defineKeyBindingsForSpecialMode(
         river.modes.LOCK_MODE,
         SpecialModeIds.LOCK_MODE
-      );
-      commands.push(...commands);
+      ));
     }
 
     return commands;
@@ -115,6 +114,7 @@ export class RiverctlExecuter implements IExecuter<RiverctlFeatures> {
 
   private executeCommands(commands: BaseCommand[]): void {
     for (const command of commands) {
+      console.log(`executing: ${command.command} ${command.args}`)
       this.execute(command);
     }
   }
@@ -127,6 +127,7 @@ export class RiverctlExecuter implements IExecuter<RiverctlFeatures> {
     commands.push(...this.processSetupActions(river));
     commands.push(...this.setupTileManager(river));
     commands.push(...this.applyOptions(river.options));
+    commands.push(...this.setupInputDevicesSettings(river))
     commands.push(...this.defineSpecialModes(river));
     commands.push(...this.defineOtherModes(river));
     // left for debugging
@@ -141,6 +142,7 @@ export class RiverctlExecuter implements IExecuter<RiverctlFeatures> {
     // }
     // console.log(this.commands)
 
+    console.log(commands)
     this.executeCommands(commands);
   }
 
