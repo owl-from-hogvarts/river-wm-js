@@ -3,10 +3,26 @@ import { IModifiersFormatter } from "./IModifiersFormatter";
 import { BaseAction } from "../actions/BaseAction";
 
 
+interface RELEASE {
+  kind: "release"
+}
+
+interface REPEAT {
+  kind: "repeat"
+}
+
+interface LAYOUT {
+  kind: "layout",
+  index: number
+}
+
+export type EKeyBindingFlags = RELEASE | REPEAT | LAYOUT
+
 export class KeyBinding<T> {
   constructor(
     public readonly action: BaseAction<T>,
-    public readonly shortcut: Shortcut
+    public readonly shortcut: Shortcut,
+    public readonly flag?: EKeyBindingFlags
   ) {}
 }
 
