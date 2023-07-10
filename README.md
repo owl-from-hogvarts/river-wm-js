@@ -17,7 +17,9 @@ You may also wish to define your own modes. To accomplish this, create an `Switc
 
 ## Apply
 
-To apply configuration, you need to choose applier implementation. By now, only `RiverctlExecuter` implementation is supported. It will generate and run `riverctl` commands for you.
+> CONFIGURATION IS APPLIED **ONLY AFTER YOU CALL** `apply()` on `RiverctlExecuter` instance
+
+To apply configuration, you need to choose applier implementation. By now, only `RiverctlExecuter` implementation is supported. It will generate and run `riverctl` commands for you. 
 
 If demand will be high enough, implementation interacting with river directly via wayland may be made.
 
