@@ -19,6 +19,7 @@ import { EEvents, ETapButtonMap, InputDevices } from "./object-model/input/input
 import { KeyBinding, Shortcut } from "./object-model/keyBindings/KeyBindings";
 import { BaseMode } from "./object-model/keyBindings/Mode";
 import { Alt, Ctrl, Shift, Super } from "./object-model/keyBindings/Modifier";
+import { BTN_LEFT, BTN_RIGHT, EPointerCommand, PointerBinding, PointerShortcut } from "./object-model/keyBindings/PointerBindings";
 
 const tileManager = "rivertile"
 
@@ -67,9 +68,14 @@ const defaultModeKeyBindings: KeyBinding<RiverctlFeatures>[] = [
   ...mapTags([Super, Alt], Object.getOwnPropertyNames(tagKeySums), TagAction.bind(null, ETagAction.TOGGLE, ETagActionScope.VIEW), mapTagKeySum),
 ]
 
+const defaultModePointerBindings: PointerBinding<RiverctlFeatures>[] = [
+  new PointerBinding(EPointerCommand.MOVE_VIEW, new PointerShortcut([Super], BTN_LEFT)),
+  new PointerBinding(EPointerCommand.RESIZE_VIEW, new PointerShortcut([Super], BTN_RIGHT)),
+]
+
 const modes: RiverModesDefinition<RiverctlFeatures> = {
-  DEFAULT_MODE: new BaseMode(defaultModeKeyBindings),
-  LOCK_MODE: new BaseMode([]),
+  DEFAULT_MODE: new BaseMode({keyboard: defaultModeKeyBindings, pointer: defaultModePointerBindings}),
+  LOCK_MODE: new BaseMode({}),
   otherModes: []
 }
 
