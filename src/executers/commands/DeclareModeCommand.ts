@@ -1,6 +1,6 @@
 import { BaseCommand } from "./Command";
 
-export class DeclareMode extends BaseCommand {
+export class DeclareModeCommand extends BaseCommand {
   override command: string = "declare-mode"
   constructor(private readonly modeName: string) {
     super()

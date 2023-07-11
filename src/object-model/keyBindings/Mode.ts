@@ -9,17 +9,32 @@ type Bindings<T> = {
 
 let debugIdCount = 0;
 
-export class BaseMode<T> {
+export abstract class BaseMode<T> {
   public readonly id = Symbol(debugIdCount);
 
   constructor(public readonly bindings: Bindings<T>) {
     debugIdCount++
   }
+
+  public getImplementationDetails<R>(visitor: ICanProcessModes<R, T>): R {
+    return visitor.baseMode(this) 
+  }
 }
 
-export abstract class NamedMode<T> extends BaseMode<T> {
-  constructor(public readonly name: string, bindings: Bindings<T>) {
+export interface ICanProcessModes<R, T> {
+  baseMode(mode: BaseMode<T>): R
+  namedMode(mode: NamedMode<T>): R
+  switchableMode(mode: SwitchableMode<T>): R
+  enterableMode(mode: EnterableMode<T>): R
+}
+
+export class NamedMode<T, NAME extends string = string> extends BaseMode<T> {
+  constructor(public readonly name: NAME, bindings: Bindings<T>) {
     super(bindings)
+  }
+
+  public override getImplementationDetails<R>(visitor: ICanProcessModes<R, T>): R {
+    return visitor.namedMode(this)
   }
 }
 
@@ -32,11 +47,15 @@ export class SwitchableMode<T> extends NamedMode<T> {
   ) {
     super(name, bindings);
   }
+
+  public override getImplementationDetails<R>(visitor: ICanProcessModes<R, T>): R {
+    return visitor.switchableMode(this)
+  }
 }
 
 export const ALL = "all"
 
-export class EnterableMode<T> extends NamedMode<T> {
+export class EnterableMode<T, NAME extends string = string> extends NamedMode<T, NAME> {
   /**
    * 
    * @param name 
@@ -45,11 +64,15 @@ export class EnterableMode<T> extends NamedMode<T> {
    * @param bindings 
    */
   constructor(
-    name: string,
+    name: NAME,
     public readonly enterModeShortcut: KeyboardShortcut,
     public readonly baseModes: NamedMode<T>[] | typeof ALL,
     bindings: Bindings<T>,
   ) {
     super(name, bindings);
+  }
+
+  public override getImplementationDetails<R>(visitor: ICanProcessModes<R, T>): R {
+    return visitor.enterableMode(this)
   }
 }
