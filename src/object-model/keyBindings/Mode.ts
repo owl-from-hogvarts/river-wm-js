@@ -7,10 +7,14 @@ type Bindings<T> = {
   pointer?: PointerBinding<T>[];
 };
 
-export class BaseMode<T> {
-  public readonly id = Symbol();
+let debugIdCount = 0;
 
-  constructor(public readonly bindings: Bindings<T>) {}
+export class BaseMode<T> {
+  public readonly id = Symbol(debugIdCount);
+
+  constructor(public readonly bindings: Bindings<T>) {
+    debugIdCount++
+  }
 }
 
 export abstract class NamedMode<T> extends BaseMode<T> {

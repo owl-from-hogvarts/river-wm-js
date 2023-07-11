@@ -40,7 +40,7 @@ const ModeKeyToModeIdMap: {
   >["specialModes"]]-?: SpecialModeIds;
 } = {
   DEFAULT_MODE: SpecialModeIds.NORMAL_MODE,
-  LOCK_MODE: SpecialModeIds.NORMAL_MODE,
+  LOCK_MODE: SpecialModeIds.LOCK_MODE,
 };
 
 export class RiverctlExecuter implements IExecuter<RiverctlFeatures> {
@@ -265,7 +265,7 @@ export class RiverctlExecuter implements IExecuter<RiverctlFeatures> {
     const fallbackModeId =
       mode.fallBackMode instanceof NamedMode
         ? mode.fallBackMode.name
-        : this.lookupModeIdByMode(mode);
+        : this.lookupModeIdByMode(mode.fallBackMode);
 
     if (!fallbackModeId) {
       throw new Error(
@@ -298,10 +298,18 @@ export class RiverctlExecuter implements IExecuter<RiverctlFeatures> {
     mode: BaseMode<RiverctlFeatures>
   ): string | undefined {
     const { specialModes } = this.river.modes;
-
+    console.log("looking up mode id by mode")
+    
     for (const modeKeyString in specialModes) {
       const modeKey = <keyof typeof specialModes>modeKeyString;
       const baseMode = specialModes[modeKey];
+      
+      if (baseMode) {
+        console.log(`known mode under key ${modeKey} found`)
+        console.log(`known mode id ${baseMode.id.description}`)
+        console.log(`current mode id ${mode.id.description}`)
+        console.log("-".repeat(30))
+      }
 
       if (baseMode && mode.id === baseMode.id) {
         return ModeKeyToModeIdMap[modeKey];
