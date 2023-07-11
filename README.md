@@ -1,19 +1,27 @@
 # river-wm-js
 
-Provides object model to configure `river-wm` in declarative fashion.
+Provides neat object model to configure `river-wm` in declarative fashion with pleasure :wink:.
 
 ## Configuration
 
 > Note: see more usage info in `src/example.ts`
 
-Instance of `River` class holds configuration. It is not instantly applied.
+Instance of `River` class holds the configuration. Configuration is not instantly [applied](#apply)
 
 ### Keybindings
 
-Keybindings are grouped by modes. There are two special modes defined for you: `normal` and `lock`. They are set up by assigning an array of `KeyBinding<FeatureSet>` to `DEFAULT_MODE` and `LOCK_MODE` respectively. `FeatureSet` is generic parameter (and type safety feature of this package) that specify, which capabilities (actions/commands) you allowed to use. This defines the set of available implementations for your config. As of now, just use `FullFeatures` type. In future though, different setting [appliers](#apply) (i.e. implementations) may provide slightly different capabilities.
+> Keybindings bind *shortcut* to an *action*.
+
+Keybindings are grouped by modes. Keybindings are *defined* by instantiating `KeyBinding<FeatureSet>`. `FeatureSet` is generic parameter (and type safety feature of this package) that specify, which capabilities (actions/commands) you may use. This defines the set of available features for your config. As of now, just use `RiverctlFeatures` type. In future though, different setting [appliers](#apply) (i.e. implementations) may provide slightly different capabilities.
 
 ### Custom modes
-You may also wish to define your own modes. To accomplish this, create an `SwitchableMode` instance and configure it to your liking. Provide it *unique* name (`normal` and `locked` are reserved!), provide it with mode *from which* your's new mode will be accessible. It is possible to specify, array of modes. Then You will be able to access your freshly defined mode from any of them. In case of array provided, exiting mode would result 
+You may also wish to define your own modes. To accomplish this, create an `SwitchableMode` or `EnterableMode` instance and configure it to your liking. Provide it *unique* name (`normal` and `locked` are reserved!), provide it with mode (array of modes for `EnterableMode`) *from which* your's new mode will be accessible. 
+
+`SwitchableMode` will configure for you keybinding to *enter* the mode from `fallbackMode`, and *exit* from your mode back to `fallbackMode`. Works like toggle! 
+
+`EnterableMode` setups keybinding *only to enter* the mode from all of the specified modes. To switch to other modes (i.e. *exit* mode), you should make them enterable too. You may wan't to make `DEFAULT_MODE` enterable from `ALL`. Thus you will be able to enter it from any other mode.
+
+For more advance setup use `EnterModeAction` with appropriate keybindings or file an issue for me to implement feature.
 
 ## Apply
 
@@ -30,10 +38,4 @@ Need to setup these env vars for kde apps to respect theming settings
 QT_QPA_PLATFORMTHEME="kde"
 ```
 
-## Under the Hood
-Object model is leaf of dependency tree, i.e. it **should NOT** depend on anything.
-
-Actions may depend on object model.
-
-Executer can depend on anything.
 
