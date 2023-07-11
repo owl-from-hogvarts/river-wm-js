@@ -186,6 +186,13 @@ export class RiverctlExecuter implements IExecuter<RiverctlFeatures> {
   private defineOtherModes(): BaseCommand[] {
     const commands: BaseCommand[] = [];
 
+    // separate loop to make EnterableMode ALL constant work
+    // otherwise enter shortcut would not be applied to modes
+    // which were defined after EnterableMode ALL
+    for (const mode of this.river.modes.otherModes) {
+      commands.push(this.declareMode(mode.name))
+    }
+
     for (const mode of this.river.modes.otherModes) {
       if (mode instanceof SwitchableMode) {
         commands.push(...this.defineSwitchableMode(mode));
@@ -249,19 +256,20 @@ export class RiverctlExecuter implements IExecuter<RiverctlFeatures> {
     return [...enterModeCommands, ...keyBindingCommands]
   }
 
-  private defineSwitchableMode(
-    mode: SwitchableMode<RiverctlFeatures>
-  ): BaseCommand[] {
-    // declare mode
-    if (this.definedModes.has(mode.name)) {
+  private declareMode(name: string): DeclareMode {
+    if (this.definedModes.has(name)) {
       throw new Error(
-        `mode ${mode.name} is already defined. Can't define same mode twice`
+        `mode ${name} is already defined. Can't define same mode twice`
       );
     }
 
-    this.definedModes.add(mode.name);
-    const modeDeclaration = new DeclareMode(mode.name);
+    this.definedModes.add(name);
+    return new DeclareMode(name);
+  }
 
+  private defineSwitchableMode(
+    mode: SwitchableMode<RiverctlFeatures>
+  ): BaseCommand[] {
     const fallbackModeId =
       mode.fallBackMode instanceof NamedMode
         ? mode.fallBackMode.name
@@ -275,7 +283,7 @@ export class RiverctlExecuter implements IExecuter<RiverctlFeatures> {
 
     const mapEnterMode = new MapCommand({
       mode: fallbackModeId,
-      shortcut: mode.toggleModeKeyBinding,
+      shortcut: mode.toggleModeShortcut,
       cmd: new EnterModeAction(mode.name).getImplementationDetails(
         this.commandMapper
       ),
@@ -283,7 +291,7 @@ export class RiverctlExecuter implements IExecuter<RiverctlFeatures> {
 
     const mapExitMode = new MapCommand({
       mode: mode.name,
-      shortcut: mode.toggleModeKeyBinding,
+      shortcut: mode.toggleModeShortcut,
       cmd: new EnterModeAction(fallbackModeId).getImplementationDetails(
         this.commandMapper
       ),
@@ -291,7 +299,7 @@ export class RiverctlExecuter implements IExecuter<RiverctlFeatures> {
 
     const keyBindings = this.defineBindingsForMode(mode, mode.name);
 
-    return [modeDeclaration, ...keyBindings, mapEnterMode, mapExitMode];
+    return [...keyBindings, mapEnterMode, mapExitMode];
   }
 
   private lookupModeIdByMode(

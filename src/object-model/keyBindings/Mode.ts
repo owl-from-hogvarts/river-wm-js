@@ -26,7 +26,7 @@ export abstract class NamedMode<T> extends BaseMode<T> {
 export class SwitchableMode<T> extends NamedMode<T> {
   constructor(
     name: string,
-    public readonly toggleModeKeyBinding: KeyboardShortcut,
+    public readonly toggleModeShortcut: KeyboardShortcut,
     public readonly fallBackMode: NamedMode<T> | BaseMode<T>,
     bindings: Bindings<T>
   ) {
