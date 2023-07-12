@@ -1,26 +1,32 @@
-import { RiverctlFeatures } from "./executers/CommandMapper";
-import { RiverctlExecuter } from "./executers/RiverctlExecuter";
-import { Color } from "./object-model/Color";
-import { EAttachMode, EFocusFollowCursor, River, RiverModesDefinition, RiverOptions } from "./object-model/River";
-import { ETagAction, ETagActionScope, TagAction, mapTags } from "./object-model/Tags";
-import { CloseAction } from "./object-model/actions/Close";
-import { ExitAction } from "./object-model/actions/Exit";
-import { FocusAction } from "./object-model/actions/Focus";
-import { MoveAction } from "./object-model/actions/Move";
-import { EAxis, ResizeAction } from "./object-model/actions/Resize";
-import { SendLayoutCmd } from "./object-model/actions/SendLayoutCmd";
-import { SpawnAction } from "./object-model/actions/Spawn";
-import { SwapAction } from "./object-model/actions/Swap";
-import { ToggleFloatAction } from "./object-model/actions/ToggleFloat";
-import { ToggleFullscreen } from "./object-model/actions/ToggleFullscreen";
-import { Zoom } from "./object-model/actions/Zoom";
-import { EBaseDirection, EExtendedDirection } from "./object-model/actions/directions";
-import { EEvents, ETapButtonMap, InputDevices } from "./object-model/input/input";
-import { KeyBinding } from "./object-model/keyBindings/KeyBindings";
-import { BaseMode } from "./object-model/keyBindings/Mode";
-import { Alt, Ctrl, Shift, Super } from "./object-model/keyBindings/Modifier";
-import { BTN_LEFT, BTN_RIGHT, EPointerCommand, PointerBinding } from "./object-model/keyBindings/PointerBindings";
-import { KeyboardShortcut, PointerShortcut } from "./object-model/keyBindings/Shortcut";
+import { Actions,
+  Bindings,
+  RiverctlExecuter,
+  RiverctlFeatures,
+  Color,
+  EAttachMode,
+  RiverModesDefinition,
+  EFocusFollowCursor,
+  Input,
+  River,
+  RiverOptions,
+} from "./index"
+
+import KeyBinding = Bindings.KeyBinding
+import KeyboardShortcut = Bindings.Shortcuts.KeyboardShortcut
+import InputDevices = Input.InputDevices 
+import EBaseDirection = Actions.Directions.EBaseDirection
+import EExtendedDirection = Actions.Directions.EExtendedDirection
+import Modifiers = Bindings.Modifiers
+import EAxis = Actions.EAxis
+import mapTags = Actions.Tags.mapTags
+import ETagAction =  Actions.Tags.ETagAction
+import ETagActionScope =  Actions.Tags.ETagActionScope
+import TagAction =  Actions.Tags.TagAction
+import Pointer = Bindings.Pointer
+import Shortcuts = Bindings.Shortcuts
+import EPointerCommand = Pointer.EPointerCommand
+import PointerBinding = Pointer.PointerBinding
+import Modes = Bindings.Modes
 
 const tileManager = "rivertile"
 
@@ -38,48 +44,51 @@ function mapTagKeySum(keySum: string) {
 }
 
 const defaultModeKeyBindings: KeyBinding<RiverctlFeatures>[] = [
-  new KeyBinding(new FocusAction(EBaseDirection.PREVIOUS), new KeyboardShortcut([Super], "J")),
-  new KeyBinding(new FocusAction(EBaseDirection.NEXT), new KeyboardShortcut([Super], "K")),
-  new KeyBinding(new SwapAction(EBaseDirection.PREVIOUS), new KeyboardShortcut([Super, Shift], "J")),
-  new KeyBinding(new SwapAction(EBaseDirection.NEXT), new KeyboardShortcut([Super, Shift], "K")),
-  new KeyBinding(new SendLayoutCmd(tileManager, ["main-ratio", "-0.02"]), new KeyboardShortcut([Super], "H")),
-  new KeyBinding(new SendLayoutCmd(tileManager, ["main-ratio", "+0.02"]), new KeyboardShortcut([Super], "L")),
-  new KeyBinding(new SendLayoutCmd(tileManager, ["main-count", "+1"]), new KeyboardShortcut([Super, Shift], "H")),
-  new KeyBinding(new SendLayoutCmd(tileManager, ["main-count", "-1"]), new KeyboardShortcut([Super, Shift], "L")),
-  new KeyBinding(new CloseAction(), new KeyboardShortcut([Super], "W")),
-  new KeyBinding(new ToggleFullscreen(), new KeyboardShortcut([Super], "F")),
-  new KeyBinding(new ToggleFloatAction(), new KeyboardShortcut([Super, Shift], "F"),),
-  new KeyBinding(new SpawnAction("rofi", ["-show", "run"]), new KeyboardShortcut([Super], "R")),
-  new KeyBinding(new SpawnAction("rofi", ["-show", "drun"]), new KeyboardShortcut([Super], "D")),
-  new KeyBinding(new Zoom(), new KeyboardShortcut([Super], "Z")),
-  new KeyBinding(new MoveAction(EExtendedDirection.LEFT), new KeyboardShortcut([Super, Alt], "H")),
-  new KeyBinding(new MoveAction(EExtendedDirection.DOWN), new KeyboardShortcut([Super, Alt], "J")),
-  new KeyBinding(new MoveAction(EExtendedDirection.UP), new KeyboardShortcut([Super, Alt], "K")),
-  new KeyBinding(new MoveAction(EExtendedDirection.RIGHT), new KeyboardShortcut([Super, Alt], "L")),
-  new KeyBinding(new ResizeAction(EAxis.HORIZONTAL, -100), new KeyboardShortcut([Super, Ctrl], "H")),
-  new KeyBinding(new ResizeAction(EAxis.VERTICAL, -100), new KeyboardShortcut([Super, Ctrl], "J")),
-  new KeyBinding(new ResizeAction(EAxis.VERTICAL, +100), new KeyboardShortcut([Super, Ctrl], "K")),
-  new KeyBinding(new ResizeAction(EAxis.HORIZONTAL, +100), new KeyboardShortcut([Super, Ctrl], "L")),
-  new KeyBinding(new SpawnAction("konsole", []), new KeyboardShortcut([Ctrl, Alt], "T")),
-  new KeyBinding(new ExitAction(), new KeyboardShortcut([Super, Shift], "Q")),
-  new KeyBinding(new CloseAction(), new KeyboardShortcut([Super], "W")),
-  ...mapTags([Super], Object.getOwnPropertyNames(tagKeySums), TagAction.bind(null, ETagAction.SET, ETagActionScope.FOCUSED), mapTagKeySum),
-  ...mapTags([Super, Ctrl], Object.getOwnPropertyNames(tagKeySums), TagAction.bind(null, ETagAction.SET, ETagActionScope.VIEW), mapTagKeySum),
-  ...mapTags([Super, Shift], Object.getOwnPropertyNames(tagKeySums), TagAction.bind(null, ETagAction.TOGGLE, ETagActionScope.FOCUSED), mapTagKeySum),
-  ...mapTags([Super, Alt], Object.getOwnPropertyNames(tagKeySums), TagAction.bind(null, ETagAction.TOGGLE, ETagActionScope.VIEW), mapTagKeySum),
+  new KeyBinding(new Actions.Focus(EBaseDirection.PREVIOUS), new KeyboardShortcut([Modifiers.Super], "J")),
+  new KeyBinding(new Actions.Focus(EBaseDirection.NEXT), new KeyboardShortcut([Modifiers.Super], "K")),
+  new KeyBinding(new Actions.Swap(EBaseDirection.PREVIOUS), new KeyboardShortcut([Modifiers.Super, Modifiers.Shift], "J")),
+  new KeyBinding(new Actions.Swap(EBaseDirection.NEXT), new KeyboardShortcut([Modifiers.Super, Modifiers.Shift], "K")),
+  new KeyBinding(new Actions.SendLayoutCmd(tileManager, ["main-ratio", "-0.02"]), new KeyboardShortcut([Modifiers.Super], "H")),
+  new KeyBinding(new Actions.SendLayoutCmd(tileManager, ["main-ratio", "+0.02"]), new KeyboardShortcut([Modifiers.Super], "L")),
+  new KeyBinding(new Actions.SendLayoutCmd(tileManager, ["main-count", "+1"]), new KeyboardShortcut([Modifiers.Super, Modifiers.Shift], "H")),
+  new KeyBinding(new Actions.SendLayoutCmd(tileManager, ["main-count", "-1"]), new KeyboardShortcut([Modifiers.Super, Modifiers.Shift], "L")),
+  new KeyBinding(new Actions.CloseAction(), new KeyboardShortcut([Modifiers.Super], "W")),
+  new KeyBinding(new Actions.ToggleFullscreen(), new KeyboardShortcut([Modifiers.Super], "F")),
+  new KeyBinding(new Actions.ToggleFloat(), new KeyboardShortcut([Modifiers.Super, Modifiers.Shift], "F"),),
+  new KeyBinding(new Actions.Spawn("rofi", ["-show", "run"]), new KeyboardShortcut([Modifiers.Super], "R")),
+  new KeyBinding(new Actions.Spawn("rofi", ["-show", "drun"]), new KeyboardShortcut([Modifiers.Super], "D")),
+  new KeyBinding(new Actions.Zoom(), new KeyboardShortcut([Modifiers.Super], "Z")),
+  new KeyBinding(new Actions.Move(EExtendedDirection.LEFT), new KeyboardShortcut([Modifiers.Super, Modifiers.Alt], "H")),
+  new KeyBinding(new Actions.Move(EExtendedDirection.DOWN), new KeyboardShortcut([Modifiers.Super, Modifiers.Alt], "J")),
+  new KeyBinding(new Actions.Move(EExtendedDirection.UP), new KeyboardShortcut([Modifiers.Super, Modifiers.Alt], "K")),
+  new KeyBinding(new Actions.Move(EExtendedDirection.RIGHT), new KeyboardShortcut([Modifiers.Super, Modifiers.Alt], "L")),
+  new KeyBinding(new Actions.Resize(EAxis.HORIZONTAL, -100), new KeyboardShortcut([Modifiers.Super, Modifiers.Ctrl], "H")),
+  new KeyBinding(new Actions.Resize(EAxis.VERTICAL, -100), new KeyboardShortcut([Modifiers.Super, Modifiers.Ctrl], "J")),
+  new KeyBinding(new Actions.Resize(EAxis.VERTICAL, +100), new KeyboardShortcut([Modifiers.Super, Modifiers.Ctrl], "K")),
+  new KeyBinding(new Actions.Resize(EAxis.HORIZONTAL, +100), new KeyboardShortcut([Modifiers.Super, Modifiers.Ctrl], "L")),
+  new KeyBinding(new Actions.Spawn("konsole", []), new KeyboardShortcut([Modifiers.Ctrl, Modifiers.Alt], "T")),
+  new KeyBinding(new Actions.Exit(), new KeyboardShortcut([Modifiers.Super, Modifiers.Shift], "Q")),
+  new KeyBinding(new Actions.CloseAction(), new KeyboardShortcut([Modifiers.Super], "W")),
+  ...mapTags([Modifiers.Super], Object.getOwnPropertyNames(tagKeySums), TagAction.bind(null, ETagAction.SET, ETagActionScope.FOCUSED), mapTagKeySum),
+  ...mapTags([Modifiers.Super, Modifiers.Ctrl], Object.getOwnPropertyNames(tagKeySums), TagAction.bind(null, ETagAction.SET, ETagActionScope.VIEW), mapTagKeySum),
+  ...mapTags([Modifiers.Super, Modifiers.Shift], Object.getOwnPropertyNames(tagKeySums), TagAction.bind(null, ETagAction.TOGGLE, ETagActionScope.FOCUSED), mapTagKeySum),
+  ...mapTags([Modifiers.Super, Modifiers.Alt], Object.getOwnPropertyNames(tagKeySums), TagAction.bind(null, ETagAction.TOGGLE, ETagActionScope.VIEW), mapTagKeySum),
 ]
 
 const defaultModePointerBindings: PointerBinding<RiverctlFeatures>[] = [
-  new PointerBinding(EPointerCommand.MOVE_VIEW, new PointerShortcut([Super], BTN_LEFT)),
-  new PointerBinding(EPointerCommand.RESIZE_VIEW, new PointerShortcut([Super], BTN_RIGHT)),
+  new PointerBinding(EPointerCommand.MOVE_VIEW, new Shortcuts.PointerShortcut([Modifiers.Super], Pointer.BTN_LEFT)),
+  new PointerBinding(EPointerCommand.RESIZE_VIEW, new Shortcuts.PointerShortcut([Modifiers.Super], Pointer.BTN_RIGHT)),
 ]
+
+const defaultMode = new Modes.EnterableMode("normal", new KeyboardShortcut([Modifiers.Super, Modifiers.Shift], "Z"), Modes.ALL, {keyboard: defaultModeKeyBindings, pointer: defaultModePointerBindings});
+const testMode: Modes.EnterableMode<RiverctlFeatures> = new Modes.EnterableMode("test", new KeyboardShortcut([Modifiers.Super, Modifiers.Shift], "x"), [defaultMode], {});
 
 const modes: RiverModesDefinition<RiverctlFeatures> = {
   specialModes: {
-    DEFAULT_MODE: new BaseMode({keyboard: defaultModeKeyBindings, pointer: defaultModePointerBindings}),
-    LOCK_MODE: new BaseMode({}),
+    DEFAULT_MODE: defaultMode,
+    LOCK_MODE: new Modes.NamedMode("locked", {}),
   },
-  otherModes: []
+  otherModes: [testMode]
 }
 
 const options: RiverOptions = {
@@ -96,10 +105,10 @@ const options: RiverOptions = {
 
 const inputDevices: InputDevices = {
   "pointer-1267-12608-MSFT0001:01_04F3:3140_Touchpad": {
-    events: EEvents.DISABLED_ON_EXTERNAL_MOUSE,
+    events: Input.EEvents.DISABLED_ON_EXTERNAL_MOUSE,
     drag: true,
     tap: true,
-    tapButtonMap: ETapButtonMap.LEFT_RIGHT_MIDDLE,
+    tapButtonMap: Input.ETapButtonMap.LEFT_RIGHT_MIDDLE,
     disableWhileTyping: true,
     scrollMethod: {kind: "two-finger"}
   }
@@ -109,9 +118,9 @@ const river = new River(modes, options, {
   input: inputDevices,
   tileManager,
   startupActions: [
-    new SpawnAction("dbus-update-activation-environment", ["--systemd", "WAYLAND_DISPLAY", "XDG_CURRENT_DESKTOP=river", `XDG_CONFIG_DIRS`]),
-    new SpawnAction("systemctl", ["--user", "import-environment", "WAYLAND_DISPLAY", "XDG_CONFIG_DIRS"]),
-    new SpawnAction("systemctl", ["--user", "set-environment", "XDG_CURRENT_DESKTOP=river", /* `XDG_CONFIG_DIRS=${process.env["XDG_CONFIG_DIRS"]}:/etc/xdg` */])
+    new Actions.Spawn("dbus-update-activation-environment", ["--systemd", "WAYLAND_DISPLAY", "XDG_CURRENT_DESKTOP=river", `XDG_CONFIG_DIRS`]),
+    new Actions.Spawn("systemctl", ["--user", "import-environment", "WAYLAND_DISPLAY", "XDG_CONFIG_DIRS"]),
+    new Actions.Spawn("systemctl", ["--user", "set-environment", "XDG_CURRENT_DESKTOP=river", /* `XDG_CONFIG_DIRS=${process.env["XDG_CONFIG_DIRS"]}:/etc/xdg` */])
   ]
 })
 

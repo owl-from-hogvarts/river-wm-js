@@ -16,7 +16,7 @@ import { ICanFocusOutput, ICanSendToOutput } from "./actions/Output";
 import { ICanResize } from "./actions/Resize";
 import { ICanExit } from "./actions/Exit";
 import { BaseAction } from "./actions/BaseAction";
-import { ICanTag } from "./Tags";
+import { ICanTag } from "./actions/Tags";
 
 export type FullFeatures<T> = ICanEnterMode<T> &
   ICanFocus<T> &

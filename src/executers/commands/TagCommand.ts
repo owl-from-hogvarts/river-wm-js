@@ -1,4 +1,4 @@
-import { ETagAction, ETagActionScope, Tag } from "../../object-model/Tags";
+import { ETagAction, ETagActionScope, Tag } from "../../object-model/actions/Tags";
 import { BaseCommand } from "./Command"
 
 

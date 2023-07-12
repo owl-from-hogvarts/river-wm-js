@@ -20,7 +20,7 @@ export type EFocusOutputDirection = BASE_DIRECTION_OUTPUT | EXTENDED_DIRECTION_O
 
 export type Output = EFocusOutputDirection
 
-export class FocusOutput extends BaseAction<ICanFocusOutput<unknown>> {
+export class FocusOutputAction extends BaseAction<ICanFocusOutput<unknown>> {
   constructor(private readonly output: Output) {
     super()
   }
@@ -36,7 +36,7 @@ export interface ICanFocusOutput<R> {
 } 
 
 
-export class SendToOutput extends BaseAction<ICanSendToOutput<unknown>> {
+export class SendToOutputAction extends BaseAction<ICanSendToOutput<unknown>> {
   constructor(private readonly output: Output) {
     super()
   }

@@ -3,7 +3,7 @@ import { MoveAction } from "../object-model/actions/Move";
 import { Output } from "../object-model/actions/Output";
 import { EAxis } from "../object-model/actions/Resize";
 import { FullFeatures } from "../object-model/River";
-import { ETagAction, ETagActionScope } from "../object-model/Tags";
+import { ETagAction, ETagActionScope } from "../object-model/actions/Tags";
 import { CloseCommand } from "./commands/CloseCommand";
 import { BaseCommand } from "./commands/Command";
 import { EnterModeCommand } from "./commands/EnterModeCommand";
