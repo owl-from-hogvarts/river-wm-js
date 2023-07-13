@@ -19,7 +19,7 @@ You may also wish to define your own modes. To accomplish this, create an `Switc
 
 `SwitchableMode` will configure for you keybinding to *enter* the mode from `fallbackMode`, and *exit* from your mode back to `fallbackMode`. Works like toggle! 
 
-`EnterableMode` setups keybinding *only to enter* the mode from all of the specified modes. To switch to other modes (i.e. *exit* mode), you should make them enterable too. You may wan't to make `DEFAULT_MODE` enterable from `ALL`. Thus you will be able to enter it from any other mode.
+`EnterableMode` setups keybinding *only to enter* the mode from all of the specified modes. To switch to other modes (i.e. *exit* mode), you should make them enterable too. You may want to make `DEFAULT_MODE` enterable from `ALL`. Thus you will be able to enter it from any other mode.
 
 For more advance setup use `EnterModeAction` with appropriate keybindings or file an issue for me to implement feature.
 
