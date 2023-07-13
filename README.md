@@ -1,6 +1,6 @@
 # river-wm-js
 
-Provides neat object model to configure `river-wm` in declarative fashion with pleasure :wink:.
+Provides neat, dependency free object model to configure `river-wm` in declarative fashion with pleasure :wink:.
 
 ## Configuration
 

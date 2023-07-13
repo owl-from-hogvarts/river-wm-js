@@ -1,7 +1,7 @@
 {
-  "name": "river-wm",
+  "name": "river-wm-js",
   "version": "0.1.0",
-  "description": "",
+  "description": "Configure your river-wm with pleasure 😉",
   "main": "./dist/index.js",
   "types": "./dist/build/index.d.ts",
   "type": "module",
@@ -12,9 +12,28 @@
     "build": "rollup --config rollup.config.ts --configPlugin typescript --bundleConfigAsCjs",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "keywords": [
+    "river",
+    "wm",
+    "window",
+    "manager",
+    "object",
+    "model",
+    "config",
+    "configuration",
+    "keybindings",
+    "shortcuts"
+  ],
+  "homepage": "https://github.com/owl-from-hogvarts/river-wm-js",
+  "author": {
+    "name": "owl-from-hogvarts",
+    "url": "https://github.com/owl-from-hogvarts"
+  },
+  "files": [
+    "./dist"
+  ],
+  "repository": "github:owl-from-hogvarts/river-wm-js",
+  "license": "GPL-3.0-or-later",
   "devDependencies": {
     "@rollup/plugin-typescript": "^11.1.2",
     "rollup": "^3.26.0",
