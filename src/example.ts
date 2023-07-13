@@ -1,3 +1,4 @@
+#!/usr/bin/env node
 
 // !!! THIS IS READY MADE CONFIGURATION !!!
 // you may use it right away and then tune up to your linking
