@@ -3,13 +3,13 @@
   "version": "0.1.0",
   "description": "Configure your river-wm with pleasure 😉",
   "main": "./dist/index.js",
-  "types": "./dist/build/index.d.ts",
+  "types": "./dist/index.d.ts",
   "type": "module",
   "engines": {
     "node": ">=16"
   },
   "scripts": {
-    "build": "rollup --config rollup.config.ts --configPlugin typescript --bundleConfigAsCjs",
+    "build": "tsc",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [
@@ -35,10 +35,7 @@
   "repository": "github:owl-from-hogvarts/river-wm-js",
   "license": "GPL-3.0-or-later",
   "devDependencies": {
-    "@rollup/plugin-typescript": "^11.1.2",
-    "rollup": "^3.26.0",
-    "@types/node": "^18.16.2",
-    "tslib": "^2.6.0"
+    "@types/node": "^18.16.2"
   },
   "dependencies": {
   }
