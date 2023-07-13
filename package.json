@@ -1,21 +1,19 @@
 {
-  "name": "river-wm",
+  "name": "river-wm-js",
   "version": "0.1.0",
   "description": "",
-  "main": "index.js",
+  "main": "dist/index.js",
+  "types": "./dist/build/index.d.ts",
+  "type": "module",
   "scripts": {
-    "build": "rollup --config rollup.config.ts --configPlugin typescript --bundleConfigAsCjs",
-    "dist": "npm run build; cp ./dist/index.js ~/.config/river/init.js; chmod u+x ~/.config/river/init.js",
+    "build": "tsc",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "@rollup/plugin-typescript": "^11.1.2",
-    "rollup": "^3.26.0",
-    "@types/node": "^18.16.2",
-    "tslib": "^2.6.0"
+    "@types/node": "^18.16.2"
   },
   "dependencies": {
   }
