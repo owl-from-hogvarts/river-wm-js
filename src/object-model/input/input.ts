@@ -1,5 +1,5 @@
-import { EAccelProfile } from "./accelProfiles"
-import { EScrollMethod } from "./scrollMethod"
+import { EAccelProfile } from "./accelProfiles.js"
+import { EScrollMethod } from "./scrollMethod.js"
 
 export enum EEvents {
   ENABLED,

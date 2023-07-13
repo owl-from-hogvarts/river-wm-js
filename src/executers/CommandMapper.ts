@@ -1,25 +1,25 @@
-import { EBaseDirection, EExtendedDirection } from "../object-model/actions/directions";
-import { MoveAction } from "../object-model/actions/Move";
-import { Output } from "../object-model/actions/Output";
-import { EAxis } from "../object-model/actions/Resize";
-import { FullFeatures } from "../object-model/River";
-import { ETagAction, ETagActionScope } from "../object-model/actions/Tags";
-import { CloseCommand } from "./commands/CloseCommand";
-import { BaseCommand } from "./commands/Command";
-import { EnterModeCommand } from "./commands/EnterModeCommand";
-import { ExitCommand } from "./commands/ExitCommand";
-import { FocusCommand } from "./commands/FocusCommand";
-import { MoveCommand } from "./commands/MoveCommand";
-import { FocusOutputCommand, SendToOutputCommand } from "./commands/OutputCommands";
-import { ResizeCommand } from "./commands/ResizeCommand";
-import { SendLayoutCmdCommand } from "./commands/SendLayoutCmd";
-import { SnapCommand } from "./commands/SnapCommand";
-import { SpawnCommand } from "./commands/SpawnCommand";
-import { SwapCommand } from "./commands/SwapCommand";
-import { TagCommad } from "./commands/TagCommand";
-import { ToggleFloatCommand } from "./commands/ToggleFloatCommand";
-import { ToggleFullscreenCommand } from "./commands/ToggleFullscreenCommand";
-import { ZoomCommand } from "./commands/ZoomCommand";
+import { EBaseDirection, EExtendedDirection } from "../object-model/actions/directions.js";
+import { MoveAction } from "../object-model/actions/Move.js";
+import { Output } from "../object-model/actions/Output.js";
+import { EAxis } from "../object-model/actions/Resize.js";
+import { FullFeatures } from "../object-model/River.js";
+import { ETagAction, ETagActionScope } from "../object-model/actions/Tags.js";
+import { CloseCommand } from "./commands/CloseCommand.js";
+import { BaseCommand } from "./commands/Command.js";
+import { EnterModeCommand } from "./commands/EnterModeCommand.js";
+import { ExitCommand } from "./commands/ExitCommand.js";
+import { FocusCommand } from "./commands/FocusCommand.js";
+import { MoveCommand } from "./commands/MoveCommand.js";
+import { FocusOutputCommand, SendToOutputCommand } from "./commands/OutputCommands.js";
+import { ResizeCommand } from "./commands/ResizeCommand.js";
+import { SendLayoutCmdCommand } from "./commands/SendLayoutCmd.js";
+import { SnapCommand } from "./commands/SnapCommand.js";
+import { SpawnCommand } from "./commands/SpawnCommand.js";
+import { SwapCommand } from "./commands/SwapCommand.js";
+import { TagCommad } from "./commands/TagCommand.js";
+import { ToggleFloatCommand } from "./commands/ToggleFloatCommand.js";
+import { ToggleFullscreenCommand } from "./commands/ToggleFullscreenCommand.js";
+import { ZoomCommand } from "./commands/ZoomCommand.js";
 
 // all commands should be registered here
 // const map = new Set<ICommandFactory>()

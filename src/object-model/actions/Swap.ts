@@ -1,5 +1,5 @@
-import { BaseAction } from "./BaseAction";
-import { EBaseDirection } from "./directions";
+import { BaseAction } from "./BaseAction.js";
+import { EBaseDirection } from "./directions.js";
 
 export class SwapAction extends BaseAction<ICanSwap<unknown>> {
   override getImplementationDetails<R>(visitor: ICanSwap<R>): R {

@@ -1,4 +1,4 @@
-import { BaseCommand } from "./Command";
+import { BaseCommand } from "./Command.js";
 
 export class DefaultLayout extends BaseCommand {
   override readonly command: string = "default-layout";

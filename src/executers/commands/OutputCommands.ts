@@ -1,6 +1,6 @@
-import { Output } from "../../object-model/actions/Output";
-import { BaseCommand } from "./Command";
-import { BaseDirectionMap, ExtendedDirectionMap } from "./directionMap";
+import { Output } from "../../object-model/actions/Output.js";
+import { BaseCommand } from "./Command.js";
+import { BaseDirectionMap, ExtendedDirectionMap } from "./directionMap.js";
 
 function mapOutput(output: Output): string {
   switch (output.kind) {

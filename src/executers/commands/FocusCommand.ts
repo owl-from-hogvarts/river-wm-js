@@ -1,6 +1,6 @@
-import { EBaseDirection } from "../../object-model/actions/directions";
-import { BaseCommand } from "./Command";
-import { BaseDirectionMap } from "./directionMap";
+import { EBaseDirection } from "../../object-model/actions/directions.js";
+import { BaseCommand } from "./Command.js";
+import { BaseDirectionMap } from "./directionMap.js";
 
 export class FocusCommand extends BaseCommand {
   override readonly command: string = "focus-view";

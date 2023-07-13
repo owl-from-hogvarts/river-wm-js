@@ -1,6 +1,6 @@
-import { River, RiverModesDefinition } from "../object-model/River";
-import { BaseAction } from "../object-model/actions/BaseAction";
-import { EnterModeAction } from "../object-model/actions/EnterMode";
+import { RiverModesDefinition } from "../object-model/River.js";
+import { BaseAction } from "../object-model/actions/BaseAction.js";
+import { EnterModeAction } from "../object-model/actions/EnterMode.js";
 import {
   ALL,
   BaseMode,
@@ -8,17 +8,17 @@ import {
   ICanProcessModes,
   NamedMode,
   SwitchableMode,
-} from "../object-model/keyBindings/Mode";
-import { CommandMapper, RiverctlFeatures } from "./CommandMapper";
-import { BaseCommand } from "./commands/Command";
-import { DeclareModeCommand } from "./commands/DeclareModeCommand";
+} from "../object-model/keyBindings/Mode.js";
+import { CommandMapper, RiverctlFeatures } from "./CommandMapper.js";
+import { BaseCommand } from "./commands/Command.js";
+import { DeclareModeCommand } from "./commands/DeclareModeCommand.js";
 import {
   MapCommand,
   MapDescription,
   MapPointerCommand,
   MapPointerDescription,
   PointerCommandMap,
-} from "./commands/MapCommand";
+} from "./commands/MapCommand.js";
 
 enum SpecialModeIds {
   NORMAL_MODE = "normal",

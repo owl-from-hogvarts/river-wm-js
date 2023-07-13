@@ -1,5 +1,5 @@
-import { BaseAction } from "./BaseAction";
-import { EBaseDirection } from "./directions";
+import { BaseAction } from "./BaseAction.js";
+import { EBaseDirection } from "./directions.js";
 
 export class FocusAction extends BaseAction<ICanFocus<unknown>> {
   override getImplementationDetails<R>(visitor: ICanFocus<R>): R {

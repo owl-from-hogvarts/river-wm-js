@@ -1,4 +1,4 @@
-import { BaseCommand } from "./Command";
+import { BaseCommand } from "./Command.js";
 
 export class SpawnCommand extends BaseCommand {
   override command: string = "spawn";

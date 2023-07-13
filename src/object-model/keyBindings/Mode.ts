@@ -1,6 +1,6 @@
-import { KeyBinding } from "./KeyBindings";
-import { PointerBinding } from "./PointerBindings";
-import { KeyboardShortcut } from "./Shortcut";
+import { KeyBinding } from "./KeyBindings.js";
+import { PointerBinding } from "./PointerBindings.js";
+import { KeyboardShortcut } from "./Shortcut.js";
 
 type Bindings<T> = {
   keyboard?: KeyBinding<T>[];

@@ -1,22 +1,22 @@
-import { InputDevices } from "./input/input";
-import { ICanEnterMode } from "./actions/EnterMode";
-import { ICanFocus } from "./actions/Focus";
-import { ICanMove } from "./actions/Move";
-import { ICanSendLayoutCmd } from "./actions/SendLayoutCmd";
-import { ICanSpawn } from "./actions/Spawn";
-import { ICanSwap } from "./actions/Swap";
-import { ICanToggleFloat } from "./actions/ToggleFloat";
-import { Color } from "./Color";
-import { NamedMode } from "./keyBindings/Mode";
-import { ICanClose } from "./actions/Close";
-import { ICanSnap } from "./actions/Snap";
-import { ICanToggleFullscreen } from "./actions/ToggleFullscreen";
-import { ICanZoom } from "./actions/Zoom";
-import { ICanFocusOutput, ICanSendToOutput } from "./actions/Output";
-import { ICanResize } from "./actions/Resize";
-import { ICanExit } from "./actions/Exit";
-import { BaseAction } from "./actions/BaseAction";
-import { ICanTag } from "./actions/Tags";
+import { InputDevices } from "./input/input.js";
+import { ICanEnterMode } from "./actions/EnterMode.js";
+import { ICanFocus } from "./actions/Focus.js";
+import { ICanMove } from "./actions/Move.js";
+import { ICanSendLayoutCmd } from "./actions/SendLayoutCmd.js";
+import { ICanSpawn } from "./actions/Spawn.js";
+import { ICanSwap } from "./actions/Swap.js";
+import { ICanToggleFloat } from "./actions/ToggleFloat.js";
+import { Color } from "./Color.js";
+import { NamedMode } from "./keyBindings/Mode.js";
+import { ICanClose } from "./actions/Close.js";
+import { ICanSnap } from "./actions/Snap.js";
+import { ICanToggleFullscreen } from "./actions/ToggleFullscreen.js";
+import { ICanZoom } from "./actions/Zoom.js";
+import { ICanFocusOutput, ICanSendToOutput } from "./actions/Output.js";
+import { ICanResize } from "./actions/Resize.js";
+import { ICanExit } from "./actions/Exit.js";
+import { BaseAction } from "./actions/BaseAction.js";
+import { ICanTag } from "./actions/Tags.js";
 
 export type FullFeatures<T> = ICanEnterMode<T> &
   ICanFocus<T> &

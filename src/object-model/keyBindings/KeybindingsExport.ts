@@ -1,8 +1,6 @@
+export { KeyBinding } from "./KeyBindings.js";
+export * as Modes from "./ModeExport.js";
+export * as Modifiers from "./Modifier.js";
 
-export { KeyBinding } from "./KeyBindings"
-export * as Modes from "./ModeExport"
-export * as Modifiers from "./Modifier"
-
-export * as Pointer from "./PointerBindings"
-export * as Shortcuts from "./Shortcut"
-
+export * as Pointer from "./PointerBindings.js";
+export * as Shortcuts from "./Shortcut.js";

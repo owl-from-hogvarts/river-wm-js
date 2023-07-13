@@ -1,11 +1,11 @@
-import { Color } from "../../object-model/Color";
+import { Color } from "../../object-model/Color.js";
 import {
   EAttachMode,
   EFocusFollowCursor,
   RiverOptions,
   THideCursor,
-} from "../../object-model/River";
-import { BaseCommand } from "./Command";
+} from "../../object-model/River.js";
+import { BaseCommand } from "./Command.js";
 
 // T - actual river options, V - mapped functions
 type OptionMapper<T> = {

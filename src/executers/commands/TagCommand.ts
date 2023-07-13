@@ -1,5 +1,5 @@
-import { ETagAction, ETagActionScope, Tag } from "../../object-model/actions/Tags";
-import { BaseCommand } from "./Command"
+import { ETagAction, ETagActionScope, Tag } from "../../object-model/actions/Tags.js";
+import { BaseCommand } from "./Command.js"
 
 
 const TagActionMap = {

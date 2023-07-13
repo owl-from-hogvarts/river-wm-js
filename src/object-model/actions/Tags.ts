@@ -1,7 +1,7 @@
-import { BaseAction } from "./BaseAction";
-import { KeyBinding } from "../keyBindings/KeyBindings";
-import { Modifier } from "../keyBindings/Modifier";
-import { KeyboardShortcut } from "../keyBindings/Shortcut";
+import { BaseAction } from "./BaseAction.js";
+import { KeyBinding } from "../keyBindings/KeyBindings.js";
+import { Modifier } from "../keyBindings/Modifier.js";
+import { KeyboardShortcut } from "../keyBindings/Shortcut.js";
 
 export type Tag = number;
 

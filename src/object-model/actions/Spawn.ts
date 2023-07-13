@@ -1,4 +1,4 @@
-import { BaseAction } from "./BaseAction";
+import { BaseAction } from "./BaseAction.js";
 
 export class SpawnAction extends BaseAction<ICanSpawn<unknown>> {
   override getImplementationDetails<R>(visitor: ICanSpawn<R>): R {

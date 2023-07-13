@@ -1,4 +1,4 @@
-import { BaseAction } from "./BaseAction";
+import { BaseAction } from "./BaseAction.js";
 
 /** Makes focused view either floating or tiled */
 export class ToggleFloatAction extends BaseAction<ICanToggleFloat<unknown>> {

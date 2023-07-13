@@ -1,5 +1,5 @@
-import { BaseAction } from "./BaseAction";
-import { EBaseDirection, EExtendedDirection } from "./directions";
+import { BaseAction } from "./BaseAction.js";
+import { EBaseDirection, EExtendedDirection } from "./directions.js";
 
 interface BASE_DIRECTION_OUTPUT {
   kind: "base",

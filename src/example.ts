@@ -9,7 +9,7 @@ import { Actions,
   Input,
   River,
   RiverOptions,
-} from "./index"
+} from "./index.js"
 
 import KeyBinding = Bindings.KeyBinding
 import KeyboardShortcut = Bindings.Shortcuts.KeyboardShortcut

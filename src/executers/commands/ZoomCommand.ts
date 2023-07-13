@@ -1,4 +1,4 @@
-import { BaseCommand } from "./Command";
+import { BaseCommand } from "./Command.js";
 
 
 export class ZoomCommand extends BaseCommand {

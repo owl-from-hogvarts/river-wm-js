@@ -1,2 +1,2 @@
 
-export { ETagAction, ETagActionScope, Tag, TagAction, mapTags } from "./Tags"
+export { ETagAction, ETagActionScope, Tag, TagAction, mapTags } from "./Tags.js"

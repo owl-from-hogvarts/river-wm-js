@@ -1,5 +1,5 @@
-import { BaseAction } from "../actions/BaseAction";
-import { PointerShortcut } from "./Shortcut";
+import { BaseAction } from "../actions/BaseAction.js";
+import { PointerShortcut } from "./Shortcut.js";
 
 export const BTN_LEFT = "BTN_LEFT"
 export const BTN_RIGHT = "BTN_RIGHT"

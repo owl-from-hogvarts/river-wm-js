@@ -1,5 +1,5 @@
-import { EAxis } from "../../object-model/actions/Resize";
-import { BaseCommand } from "./Command";
+import { EAxis } from "../../object-model/actions/Resize.js";
+import { BaseCommand } from "./Command.js";
 
 const AxisMap = {
   [EAxis.HORIZONTAL]: "horizontal",

@@ -1,4 +1,4 @@
-import { BaseAction } from "./BaseAction";
+import { BaseAction } from "./BaseAction.js";
 
 
 export class Zoom extends BaseAction<ICanZoom<unknown>> {

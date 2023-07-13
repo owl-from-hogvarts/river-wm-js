@@ -1,6 +1,6 @@
-import { MoveAction } from "../../object-model/actions/Move";
-import { BaseCommand } from "./Command";
-import { ExtendedDirectionMap } from "./directionMap";
+import { MoveAction } from "../../object-model/actions/Move.js";
+import { BaseCommand } from "./Command.js";
+import { ExtendedDirectionMap } from "./directionMap.js";
 
 export class MoveCommand extends BaseCommand {
   override command: string = "move";

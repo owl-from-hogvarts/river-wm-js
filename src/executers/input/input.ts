@@ -1,8 +1,8 @@
-import { EAccelProfile } from "../../object-model/input/accelProfiles";
-import { EClickMethod, EEvents, ETapButtonMap, InputDevice } from "../../object-model/input/input";
-import { EScrollMethod } from "../../object-model/input/scrollMethod";
-import { BaseCommand } from "../commands/Command";
-import { OptionMapperV4 } from "../commands/Options";
+import { EAccelProfile } from "../../object-model/input/accelProfiles.js";
+import { EClickMethod, EEvents, ETapButtonMap, InputDevice } from "../../object-model/input/input.js";
+import { EScrollMethod } from "../../object-model/input/scrollMethod.js";
+import { BaseCommand } from "../commands/Command.js";
+import { OptionMapperV4 } from "../commands/Options.js";
 
 const DISABLED = "disabled"
 const ENABLED = "enabled"

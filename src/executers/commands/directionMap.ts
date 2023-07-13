@@ -1,4 +1,4 @@
-import { EBaseDirection, EExtendedDirection } from "../../object-model/actions/directions";
+import { EBaseDirection, EExtendedDirection } from "../../object-model/actions/directions.js";
 
 export const BaseDirectionMap = {
   [EBaseDirection.PREVIOUS]: "previous",

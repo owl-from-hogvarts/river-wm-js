@@ -1,4 +1,4 @@
-import { BaseAction } from "./BaseAction";
+import { BaseAction } from "./BaseAction.js";
 
 /** Closes focused window */
 export class CloseAction extends BaseAction<ICanClose<unknown>> {

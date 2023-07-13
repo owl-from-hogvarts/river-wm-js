@@ -1,4 +1,4 @@
-import { BaseAction } from "./BaseAction";
+import { BaseAction } from "./BaseAction.js";
 
 export enum EAxis {
   HORIZONTAL,

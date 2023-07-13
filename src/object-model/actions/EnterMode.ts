@@ -1,4 +1,4 @@
-import { BaseAction } from "./BaseAction";
+import { BaseAction } from "./BaseAction.js";
 
 export class EnterModeAction extends BaseAction<ICanEnterMode<unknown>> {
   override getImplementationDetails<R>(visitor: ICanEnterMode<R>):R {

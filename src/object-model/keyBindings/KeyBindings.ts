@@ -1,5 +1,5 @@
-import { BaseAction } from "../actions/BaseAction";
-import { KeyboardShortcut } from "./Shortcut";
+import { BaseAction } from "../actions/BaseAction.js";
+import { KeyboardShortcut } from "./Shortcut.js";
 
 export class KeyBinding<T> {
   constructor(

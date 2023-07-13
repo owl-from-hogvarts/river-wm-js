@@ -1,5 +1,5 @@
-import { BaseAction } from "./BaseAction";
-import { EExtendedDirection } from "./directions";
+import { BaseAction } from "./BaseAction.js";
+import { EExtendedDirection } from "./directions.js";
 
 export class Snap extends BaseAction<ICanSnap<unknown>> {
   constructor(private readonly direction: EExtendedDirection) {

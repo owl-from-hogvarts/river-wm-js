@@ -1,4 +1,4 @@
-import { BaseAction } from "./BaseAction";
+import { BaseAction } from "./BaseAction.js";
 
 export class ToggleFullscreen extends BaseAction<ICanToggleFullscreen<unknown>> {
   override getImplementationDetails<R>(visitor: ICanToggleFullscreen<R>): R {

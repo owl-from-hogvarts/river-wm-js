@@ -1,16 +1,16 @@
-import { IExecuter } from "./IExecuter";
+import { IExecuter } from "./IExecuter.js";
 import { execFile } from "node:child_process";
 import { promisify } from "node:util";
 import {
   River,
   RiverOptions,
-} from "../object-model/River";
-import { BaseCommand } from "./commands/Command";
-import { CommandMapper, RiverctlFeatures } from "./CommandMapper";
-import { mapOptionsToCommands, optionsMap } from "./commands/Options";
-import { DefaultLayout } from "./commands/DefaultLayoutCommand";
-import { createInputMap } from "./input/input";
-import { ModesImplementation } from "./ModeCommands";
+} from "../object-model/River.js";
+import { BaseCommand } from "./commands/Command.js";
+import { CommandMapper, RiverctlFeatures } from "./CommandMapper.js";
+import { mapOptionsToCommands, optionsMap } from "./commands/Options.js";
+import { DefaultLayout } from "./commands/DefaultLayoutCommand.js";
+import { createInputMap } from "./input/input.js";
+import { ModesImplementation } from "./ModeCommands.js";
 
 
 export class RiverctlExecuter implements IExecuter<RiverctlFeatures> {

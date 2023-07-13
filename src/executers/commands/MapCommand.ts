@@ -1,9 +1,9 @@
-import { Modifier } from "../../object-model/keyBindings/Modifier";
+import { Modifier } from "../../object-model/keyBindings/Modifier.js";
 import {
   EPointerCommand,
-} from "../../object-model/keyBindings/PointerBindings";
-import { KeyboardShortcut, PointerShortcut } from "../../object-model/keyBindings/Shortcut";
-import { BaseCommand } from "./Command";
+} from "../../object-model/keyBindings/PointerBindings.js";
+import { KeyboardShortcut, PointerShortcut } from "../../object-model/keyBindings/Shortcut.js";
+import { BaseCommand } from "./Command.js";
 
 export type MapDescription = {
   mode: string;

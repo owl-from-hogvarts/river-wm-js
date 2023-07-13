@@ -1,5 +1,5 @@
-import { IModifiersFormatter } from "./IModifiersFormatter";
-import { Modifier } from "./Modifier";
+import { IModifiersFormatter } from "./IModifiersFormatter.js";
+import { Modifier } from "./Modifier.js";
 
 interface RELEASE {
   kind: "release"
