@@ -1,5 +1,8 @@
+
+// !!! THIS IS READY MADE CONFIGURATION !!!
+// you may use it right away and then tune up to your linking
+
 import { Actions,
-  Bindings,
   RiverctlExecuter,
   RiverctlFeatures,
   Color,
@@ -9,24 +12,28 @@ import { Actions,
   Input,
   River,
   RiverOptions,
+  KeyBinding,
+  Modifiers,
+  KeyboardShortcut,
+  EBaseDirection,
+  EExtendedDirection,
+  InputDevices,
+  Modes,
+  Pointer,
+  EPointerCommand,
+  PointerBinding,
+  Shortcuts,
+  Tags,
 } from "./index.js"
 
-import KeyBinding = Bindings.KeyBinding
-import KeyboardShortcut = Bindings.Shortcuts.KeyboardShortcut
-import InputDevices = Input.InputDevices 
-import EBaseDirection = Actions.Directions.EBaseDirection
-import EExtendedDirection = Actions.Directions.EExtendedDirection
-import Modifiers = Bindings.Modifiers
+// this this the example of how you can alias nested imports
+// the syntax isn't very common so leaving it here
 import EAxis = Actions.EAxis
-import mapTags = Actions.Tags.mapTags
+import mapTags = Tags.mapTags
+// multilevel aliasing
 import ETagAction =  Actions.Tags.ETagAction
 import ETagActionScope =  Actions.Tags.ETagActionScope
 import TagAction =  Actions.Tags.TagAction
-import Pointer = Bindings.Pointer
-import Shortcuts = Bindings.Shortcuts
-import EPointerCommand = Pointer.EPointerCommand
-import PointerBinding = Pointer.PointerBinding
-import Modes = Bindings.Modes
 
 const tileManager = "rivertile"
 
@@ -43,6 +50,9 @@ function mapTagKeySum(keySum: string) {
   return tagKeySums[keySum as keyof typeof tagKeySums]
 }
 
+// strongly recommended to preserve `Actions.Focus` notation for 
+// actions and modifiers since they use pretty common names.
+// Not doing so, may result in name collisions
 const defaultModeKeyBindings: KeyBinding<RiverctlFeatures>[] = [
   new KeyBinding(new Actions.Focus(EBaseDirection.PREVIOUS), new KeyboardShortcut([Modifiers.Super], "J")),
   new KeyBinding(new Actions.Focus(EBaseDirection.NEXT), new KeyboardShortcut([Modifiers.Super], "K")),

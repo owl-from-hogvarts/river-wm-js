@@ -1,5 +1,6 @@
 export { CloseAction } from "./Close.js";
 export * as Directions from "./directions.js";
+export * from "./directions.js"
 
 export { EnterModeAction as EnterMode } from "./EnterMode.js";
 export { ExitAction as Exit } from "./Exit.js";
